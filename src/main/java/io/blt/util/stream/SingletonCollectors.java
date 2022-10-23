@@ -51,6 +51,17 @@ public final class SingletonCollectors {
     private SingletonCollectors() {
     }
 
+    /**
+     * Returns a {@code Collector} that accumulates the only element, if any, into an {@code Optional}.
+     *
+     * @param <T> the type of the input elements
+     * @return a {@code Collector} that accumulates the only element, if any, into an {@code Optional}.
+     * @throws IllegalArgumentException if more than one element is present
+     */
+    public static <T> SingletonCollector<T, Optional<T>> toOptional() {
+        return new SingletonCollector<>(Container::getOptional);
+    }
+
     private static class SingletonCollector<T, R> implements Collector<T, Container<T>, R> {
 
         private final Function<Container<T>, R> finisher;
