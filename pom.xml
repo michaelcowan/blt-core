@@ -58,6 +58,9 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <assertj.verseion>3.23.1</assertj.verseion>
+        <junit.version>5.9.0</junit.version>
+
         <release-plugin.version>3.0.0-M6</release-plugin.version>
         <source-plugin.version>3.2.1</source-plugin.version>
         <javadoc-plugin.version>3.2.0</javadoc-plugin.version>
@@ -65,6 +68,27 @@
         <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>
         <surefire-plugin.version>2.22.2</surefire-plugin.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.verseion}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <distributionManagement>
         <snapshotRepository>
