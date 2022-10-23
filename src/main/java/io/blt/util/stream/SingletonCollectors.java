@@ -62,6 +62,17 @@ public final class SingletonCollectors {
         return new SingletonCollector<>(Container::getOptional);
     }
 
+    /**
+     * Returns a {@code Collector} that accumulates the only element, if any, into a nullable {@code Object}.
+     *
+     * @param <T> the type of the input elements
+     * @return a {@code Collector} that accumulates the only element, if any, into a nullable {@code Object}.
+     * @throws IllegalArgumentException if more than one element is present
+     */
+    public static <T> SingletonCollector<T, T> toNullable() {
+        return new SingletonCollector<>(Container::getValue);
+    }
+
     private static class SingletonCollector<T, R> implements Collector<T, Container<T>, R> {
 
         private final Function<Container<T>, R> finisher;

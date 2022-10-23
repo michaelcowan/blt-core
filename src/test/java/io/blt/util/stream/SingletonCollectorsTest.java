@@ -78,6 +78,45 @@ class SingletonCollectorsTest {
 
     }
 
+    @Nested
+    class ToNullable {
+
+        @Test
+        void empty() {
+            var result = Stream.empty()
+                    .collect(SingletonCollectors.toNullable());
+
+            assertThat(result).isNull();
+        }
+
+        @Test
+        void containsSingleElement() {
+            var result = Stream.of("one")
+                    .collect(SingletonCollectors.toNullable());
+
+            assertThat(result).contains("one");
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"one", "two", "three"})
+        void containsSingleFilteredElement(String filter) {
+            var result = Stream.of("one", "two", "three")
+                    .filter(filter::equals)
+                    .collect(SingletonCollectors.toNullable());
+
+            assertThat(result).contains(filter);
+        }
+
+        @ParameterizedTest
+        @MethodSource("io.blt.util.stream.SingletonCollectorsTest#moreThanOneElement")
+        void throwsOnMoreThanOneElement(List<String> elements) {
+            assertThatIllegalStateException().isThrownBy(
+                            () -> elements.stream().collect(SingletonCollectors.toNullable()))
+                    .withMessage("Expected stream to contain exactly 0 or 1 elements")
+        }
+
+    }
+
     private static Stream<List<String>> moreThanOneElement() {
         return Stream.of(
                 List.of("one", "two"),
