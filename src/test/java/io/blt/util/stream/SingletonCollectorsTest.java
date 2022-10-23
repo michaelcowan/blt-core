@@ -112,7 +112,7 @@ class SingletonCollectorsTest {
         void throwsOnMoreThanOneElement(List<String> elements) {
             assertThatIllegalStateException().isThrownBy(
                             () -> elements.stream().collect(SingletonCollectors.toNullable()))
-                    .withMessage("Expected stream to contain exactly 0 or 1 elements")
+                    .withMessage("Expected stream to contain exactly 0 or 1 elements");
         }
 
     }
