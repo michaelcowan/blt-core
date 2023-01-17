@@ -122,6 +122,19 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc-plugin.version}</version>
+                <configuration>
+                    <quiet>true</quiet>
+                    <source>${java.version}</source>
+                    <reportOutputDirectory>docs</reportOutputDirectory>
+                    <linksource>true</linksource>
+                    <notimestamp>true</notimestamp>
+                    <nodeprecated>true</nodeprecated>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
