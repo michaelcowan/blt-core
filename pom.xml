@@ -62,7 +62,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <assertj.verseion>3.24.2</assertj.verseion>
-        <junit.version>5.9.0</junit.version>
+        <junit.version>5.9.3</junit.version>
 
         <release-plugin.version>3.0.0-M6</release-plugin.version>
         <source-plugin.version>3.2.1</source-plugin.version>
