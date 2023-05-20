@@ -61,7 +61,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <assertj.verseion>3.23.1</assertj.verseion>
+        <assertj.verseion>3.24.2</assertj.verseion>
         <junit.version>5.9.0</junit.version>
 
         <release-plugin.version>3.0.0-M6</release-plugin.version>
