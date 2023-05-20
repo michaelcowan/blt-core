@@ -64,7 +64,7 @@
         <assertj.verseion>3.24.2</assertj.verseion>
         <junit.version>5.9.3</junit.version>
 
-        <release-plugin.version>3.0.0-M6</release-plugin.version>
+        <release-plugin.version>3.0.0</release-plugin.version>
         <source-plugin.version>3.2.1</source-plugin.version>
         <javadoc-plugin.version>3.5.0</javadoc-plugin.version>
         <gpg-plugin.version>3.0.1</gpg-plugin.version>
