@@ -24,6 +24,8 @@
 
 package io.blt.util;
 
+import java.util.function.Consumer;
+
 /**
  * Static utility methods for operating on {@code Object}.
  */
@@ -31,6 +33,26 @@ public final class Obj {
 
     private Obj() {
         throw new IllegalAccessError("Utility class should be accessed statically and never constructed");
+    }
+
+    /**
+     * Passes the {@code instance} to the {@code consumer}, then returns the {@code instance}.
+     * e.g.
+     * <pre>{@code
+     * var user = Obj.tap(new User(), u -> {
+     *     u.setName("Greg");
+     *     u.setAge(15);
+     * });
+     * }</pre>
+     *
+     * @param instance instance to consume and return
+     * @param consumer operation to perform on {@code instance}
+     * @param <T>      type of {@code instance}
+     * @return {@code instance} after accepting side effects via {@code consumer}.
+     */
+    public static <T> T tap(T instance, Consumer<T> consumer) {
+        consumer.accept(instance);
+        return instance;
     }
 
 }

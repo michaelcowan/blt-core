@@ -24,15 +24,77 @@
 
 package io.blt.util;
 
+import java.util.concurrent.atomic.AtomicReference;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
+import static io.blt.util.Obj.tap;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ObjTest {
 
     @Test
     void shouldBeValidUtilityClass() throws NoSuchMethodException {
         assertValidUtilityClass(Obj.class);
+    }
+
+    @Nested
+    class Instance {
+
+        @Test
+        void tapShouldReturnInstance() {
+            var instance = new Object();
+
+            var result = tap(instance, c -> {});
+
+            assertThat(result).isEqualTo(instance);
+        }
+
+        @Test
+        void tapShouldPassInstanceToConsumer() {
+            var instance = new Object();
+            var reference = new AtomicReference<>();
+
+            tap(instance, reference::set);
+
+            var result = reference.get();
+            assertThat(result).isEqualTo(instance);
+        }
+
+        @Test
+        void tapShouldOperateOnTheInstance() {
+            var result = tap(new User(), u -> {
+                u.setName("Greg");
+                u.setAge(15);
+            });
+
+            assertThat(result)
+                    .extracting(User::getName, User::getAge)
+                    .containsExactly("Greg", 15);
+        }
+
+    }
+
+    public static class User {
+        private String name;
+        private Integer age;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
     }
 
 }
