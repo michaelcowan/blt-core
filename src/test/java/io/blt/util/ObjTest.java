@@ -76,6 +76,45 @@ class ObjTest {
 
     }
 
+    @Nested
+    class Supplied {
+
+        @Test
+        void tapShouldReturnSuppliedInstance() {
+            var instance = new Object();
+
+            var result = tap(() -> instance, s -> {});
+
+            result = tap(() -> instance, s -> {});
+
+            assertThat(result).isEqualTo(instance);
+        }
+
+        @Test
+        void tapShouldPassSuppliedInstanceToConsumer() {
+            var instance = new Object();
+            var reference = new AtomicReference<>();
+
+            tap(() -> instance, reference::set);
+
+            var result = reference.get();
+            assertThat(result).isEqualTo(instance);
+        }
+
+        @Test
+        void tapShouldOperateOnTheSuppliedInstance() {
+            var result = tap(User::new, u -> {
+                u.setName("Greg");
+                u.setAge(15);
+            });
+
+            assertThat(result)
+                    .extracting(User::getName, User::getAge)
+                    .containsExactly("Greg", 15);
+        }
+
+    }
+
     public static class User {
         private String name;
         private Integer age;

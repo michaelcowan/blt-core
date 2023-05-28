@@ -25,6 +25,7 @@
 package io.blt.util;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Static utility methods for operating on {@code Object}.
@@ -50,9 +51,31 @@ public final class Obj {
      * @param <T>      type of {@code instance}
      * @return {@code instance} after accepting side effects via {@code consumer}.
      */
-    public static <T> T tap(T instance, Consumer<T> consumer) {
-        consumer.accept(instance);
+    @SuppressWarnings("unchecked")
+    public static <T> T tap(T instance, Consumer<? extends T> consumer) {
+        // Unchecked cast is required to allow for <? extends T> which is a workaround to an ambiguity issue
+        // https://stackoverflow.com/a/48388275
+        ((Consumer<T>) consumer).accept(instance);
         return instance;
+    }
+
+    /**
+     * Calls the {@code supplier} to retrieve an instance which is passed to the {@code consumer} then returned.
+     * e.g.
+     * <pre>{@code
+     * var user = Obj.tap(User::new, u -> {
+     *     u.setName("Greg");
+     *     u.setAge(15);
+     * });
+     * }</pre>
+     *
+     * @param supplier Supplies an instance to consume and return
+     * @param consumer Operation to perform on supplied instance
+     * @param <T>      type of instance
+     * @return Supplied instance after applying side effects via {@code consumer}.
+     */
+    public static <T> T tap(Supplier<T> supplier, Consumer<? extends T> consumer) {
+        return tap(supplier.get(), consumer);
     }
 
 }
