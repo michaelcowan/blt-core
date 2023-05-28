@@ -1,1 +1,1 @@
-memberSearchIndex = [{"p":"io.blt.util.stream","c":"SingletonCollectors","l":"toNullable()"},{"p":"io.blt.util.stream","c":"SingletonCollectors","l":"toOptional()"}]
+memberSearchIndex = [{"p":"io.blt.util.stream","c":"SingletonCollectors","l":"toNullable()"},{"p":"io.blt.util.stream","c":"SingletonCollectors","l":"toOptional()"}];updateSearchResults();

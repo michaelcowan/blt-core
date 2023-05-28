@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"io.blt.util.stream","l":"SingletonCollectors"}]
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"io.blt.util.stream","l":"SingletonCollectors"}];updateSearchResults();
