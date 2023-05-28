@@ -24,19 +24,24 @@
 
 package io.blt.util.stream;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
-import java.util.stream.Stream;
-
+import static io.blt.test.AssertUtils.assertValidUtilityClass;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class SingletonCollectorsTest {
+
+    @Test
+    void shouldBeValidUtilityClass() throws NoSuchMethodException {
+        assertValidUtilityClass(SingletonCollectors.class);
+    }
 
     @Nested
     class ToOptional {
@@ -44,7 +49,7 @@ class SingletonCollectorsTest {
         @Test
         void empty() {
             var result = Stream.empty()
-                    .collect(SingletonCollectors.toOptional());
+                               .collect(SingletonCollectors.toOptional());
 
             assertThat(result).isEmpty();
         }
@@ -52,7 +57,7 @@ class SingletonCollectorsTest {
         @Test
         void containsSingleElement() {
             var result = Stream.of("one")
-                    .collect(SingletonCollectors.toOptional());
+                               .collect(SingletonCollectors.toOptional());
 
             assertThat(result).contains("one");
         }
@@ -61,8 +66,8 @@ class SingletonCollectorsTest {
         @ValueSource(strings = {"one", "two", "three"})
         void containsSingleFilteredElement(String filter) {
             var result = Stream.of("one", "two", "three")
-                    .filter(filter::equals)
-                    .collect(SingletonCollectors.toOptional());
+                               .filter(filter::equals)
+                               .collect(SingletonCollectors.toOptional());
 
             assertThat(result).contains(filter);
         }
@@ -70,9 +75,8 @@ class SingletonCollectorsTest {
         @ParameterizedTest
         @MethodSource("io.blt.util.stream.SingletonCollectorsTest#moreThanOneElement")
         void throwsOnMoreThanOneElement(List<String> elements) {
-            assertThatIllegalStateException().isThrownBy(
-                            () -> elements.stream().collect(SingletonCollectors.toOptional())
-                    )
+            assertThatIllegalStateException()
+                    .isThrownBy(() -> elements.stream().collect(SingletonCollectors.toOptional()))
                     .withMessage("Expected stream to contain exactly 0 or 1 elements");
         }
 
@@ -84,7 +88,7 @@ class SingletonCollectorsTest {
         @Test
         void empty() {
             var result = Stream.empty()
-                    .collect(SingletonCollectors.toNullable());
+                               .collect(SingletonCollectors.toNullable());
 
             assertThat(result).isNull();
         }
@@ -92,7 +96,7 @@ class SingletonCollectorsTest {
         @Test
         void containsSingleElement() {
             var result = Stream.of("one")
-                    .collect(SingletonCollectors.toNullable());
+                               .collect(SingletonCollectors.toNullable());
 
             assertThat(result).contains("one");
         }
@@ -101,8 +105,8 @@ class SingletonCollectorsTest {
         @ValueSource(strings = {"one", "two", "three"})
         void containsSingleFilteredElement(String filter) {
             var result = Stream.of("one", "two", "three")
-                    .filter(filter::equals)
-                    .collect(SingletonCollectors.toNullable());
+                               .filter(filter::equals)
+                               .collect(SingletonCollectors.toNullable());
 
             assertThat(result).contains(filter);
         }
@@ -110,8 +114,8 @@ class SingletonCollectorsTest {
         @ParameterizedTest
         @MethodSource("io.blt.util.stream.SingletonCollectorsTest#moreThanOneElement")
         void throwsOnMoreThanOneElement(List<String> elements) {
-            assertThatIllegalStateException().isThrownBy(
-                            () -> elements.stream().collect(SingletonCollectors.toNullable()))
+            assertThatIllegalStateException()
+                    .isThrownBy(() -> elements.stream().collect(SingletonCollectors.toNullable()))
                     .withMessage("Expected stream to contain exactly 0 or 1 elements");
         }
 
