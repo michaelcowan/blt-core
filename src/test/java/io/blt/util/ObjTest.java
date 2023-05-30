@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
+import static io.blt.util.Obj.poke;
 import static io.blt.util.Obj.tap;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +47,7 @@ class ObjTest {
         void tapShouldReturnInstance() {
             var instance = new Object();
 
-            var result = tap(instance, c -> {});
+            var result = poke(instance, c -> {});
 
             assertThat(result).isEqualTo(instance);
         }
@@ -56,7 +57,7 @@ class ObjTest {
             var instance = new Object();
             var reference = new AtomicReference<>();
 
-            tap(instance, reference::set);
+            poke(instance, reference::set);
 
             var result = reference.get();
             assertThat(result).isEqualTo(instance);
@@ -64,7 +65,7 @@ class ObjTest {
 
         @Test
         void tapShouldOperateOnTheInstance() {
-            var result = tap(new User(), u -> {
+            var result = poke(new User(), u -> {
                 u.setName("Greg");
                 u.setAge(15);
             });
