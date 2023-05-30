@@ -49,6 +49,7 @@ import static java.util.Objects.nonNull;
 public final class SingletonCollectors {
 
     private SingletonCollectors() {
+        throw new IllegalAccessError("Utility class should be accessed statically and never constructed");
     }
 
     /**
