@@ -29,9 +29,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
+import static io.blt.util.Obj.orElseGet;
 import static io.blt.util.Obj.poke;
 import static io.blt.util.Obj.tap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatException;
 
 class ObjTest {
 
@@ -114,6 +116,33 @@ class ObjTest {
                     .containsExactly("Greg", 15);
         }
 
+    }
+
+    @Test
+    void orElseGetShouldReturnValueIfNonNull() {
+        var value = "Phil";
+
+        var result = orElseGet(value, () -> null);
+
+        assertThat(result).isEqualTo(value);
+    }
+
+    @Test
+    void orElseGetShouldReturnSupplierResultIfValueIsNonNull() {
+        var value = "Louis";
+
+        var result = orElseGet(null, () -> value);
+
+        assertThat(result).isEqualTo(value);
+    }
+
+    @Test
+    void orElseGetShouldBubbleUpSupplierThrowable() {
+        var exception = new Exception("mock exception");
+
+        assertThatException()
+                .isThrownBy(() -> orElseGet(null, () -> {throw exception;}))
+                .isEqualTo(exception);
     }
 
     public static class User {

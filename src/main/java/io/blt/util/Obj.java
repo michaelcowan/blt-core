@@ -24,8 +24,11 @@
 
 package io.blt.util;
 
+import io.blt.util.functional.ThrowingSupplier;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import static java.util.Objects.nonNull;
 
 /**
  * Static utility methods for operating on {@code Object}.
@@ -73,6 +76,29 @@ public final class Obj {
      */
     public static <T> T tap(Supplier<T> supplier, Consumer<T> consumer) {
         return poke(supplier.get(), consumer);
+    }
+
+    /**
+     * Returns {@code value} if non-null, else invokes and returns the result of {@code supplier}.
+     * <p>
+     * Optionally, the {@code supplier} may throw which will bubble up.
+     * </p>
+     * e.g.
+     * <pre>{@code
+     * private URL homepageOrDefault(URL homepage) throws MalformedURLException {
+     *     return orElseGet(homepage, () -> new URL("https://google.com"));
+     * }
+     * }</pre>
+     *
+     * @param value    Returned if non-null
+     * @param supplier Called and returned if {@code value} is null
+     * @param <T>      Type of the returned value
+     * @param <E>      Type of {@code supplier} throwable
+     * @return {@code value} if non-null, the result of {@code supplier}
+     * @throws E {@code Throwable} that may be thrown if the {@code supplier} is invoked
+     */
+    public static <T, E extends Throwable> T orElseGet(T value, ThrowingSupplier<T, E> supplier) throws E {
+        return nonNull(value) ? value : supplier.get();
     }
 
 }
