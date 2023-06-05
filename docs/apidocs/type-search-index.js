@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"io.blt.util","l":"Obj"},{"p":"io.blt.util.stream","l":"SingletonCollectors"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"io.blt.util","l":"Obj"},{"p":"io.blt.util.stream","l":"SingletonCollectors"},{"p":"io.blt.util.functional","l":"ThrowingSupplier"}];updateSearchResults();
