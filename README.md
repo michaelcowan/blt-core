@@ -7,7 +7,7 @@
 
 ## Maven
 
-The libraries are available via [Maven Central](https://central.sonatype.dev/namespace/io.blt)
+The library is available via [Maven Central](https://central.sonatype.com/artifact/io.blt/blt-core)
 
 e.g., add the core library to your dependencies:
 
