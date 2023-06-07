@@ -59,3 +59,21 @@ private URL homepageOrDefault(URL homepage) throws MalformedURLException {
     return Obj.orElseGet(homepage, () -> new URL("https://google.com"));
 }
 ```
+
+### `SingletonCollectors`
+
+Implementations of `Collector` that reduce to exactly one or zero elements.
+
+Useful when it is not valid for more than one element to be present:
+
+```java
+var activeStep = sequentialSteps.stream()
+        .filter(SequentialStep::isActive)
+        .collect(SingletonCollectors.toNullable());
+```
+
+```java
+var maybeActiveStep = sequentialSteps.stream()
+        .filter(SequentialStep::isActive)
+        .collect(SingletonCollectors.toOptional());
+```
