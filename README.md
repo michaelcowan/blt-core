@@ -56,6 +56,6 @@ This is very similar to `Optional.ofNullable(...).orElseGet(...)` but more conci
 
 ```java
 private URL homepageOrDefault(URL homepage) throws MalformedURLException {
-    return orElseGet(homepage, () -> new URL("https://google.com"));
+    return Obj.orElseGet(homepage, () -> new URL("https://google.com"));
 }
 ```
