@@ -9,7 +9,7 @@
 
 The library is available via [Maven Central](https://central.sonatype.com/artifact/io.blt/blt-core)
 
-e.g., add the core library to your dependencies:
+e.g., to add the core library to your dependencies:
 
 ```xml
 <dependency>
@@ -17,4 +17,45 @@ e.g., add the core library to your dependencies:
     <artifactId>blt-core</artifactId>
     <version>1.0.2</version>
 </dependency>
+```
+
+# Documentation
+
+## API Docs
+
+[API docs](https://michaelcowan.github.io/blt-core/apidocs) are available for the latest release of the library.
+
+## Examples
+
+### `Obj`
+
+#### `tap` and `poke`
+
+Return a passed or supplied value after mutating via a consumer.
+
+These can be handy when building an object without the need of a helper method:
+
+```java
+var user = Obj.tap(User::new, u -> {
+    u.setName("Greg");
+    u.setAge(15);
+});
+```
+
+Or mutating an object to be passed as a parameter without the noise of a temporary variable:
+
+```java
+repository.persist(Obj.poke(user, u -> u.createDate(now())));
+```
+
+#### `orElseGet`
+
+Returns a passed value if non-null otherwise invokes and returns the result of (throwing) supplier.
+
+This is very similar to `Optional.ofNullable(...).orElseGet(...)` but more concise and supports suppliers that throw:
+
+```java
+private URL homepageOrDefault(URL homepage) throws MalformedURLException {
+    return orElseGet(homepage, () -> new URL("https://google.com"));
+}
 ```
