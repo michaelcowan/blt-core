@@ -60,6 +60,23 @@ private URL homepageOrDefault(URL homepage) throws MalformedURLException {
 }
 ```
 
+### `Str`
+
+#### `requireNotEmpty`
+
+Checks that the specified `string` is not `null` or empty (length == 0).
+
+This is similar to `Objects#requireNonNull(...)` but also checks `String#isEmpty()`.
+
+If `null` `NullPointerException` is thrown.\
+If empty `IllegalArgumentException` is thrown.
+
+```java
+public User(String name) {
+    this.name = Str.requireNotEmpty(name, "'name' must not be empty");
+}
+```
+
 ### `SingletonCollectors`
 
 Implementations of `Collector` that reduce to exactly one or zero elements.
