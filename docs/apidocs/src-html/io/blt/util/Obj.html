@@ -37,8 +37,8 @@
 <span class="source-line-no">024</span><span id="line-24"></span>
 <span class="source-line-no">025</span><span id="line-25">package io.blt.util;</span>
 <span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">import io.blt.util.functional.ThrowingSupplier;</span>
-<span class="source-line-no">028</span><span id="line-28">import java.util.function.Consumer;</span>
+<span class="source-line-no">027</span><span id="line-27">import io.blt.util.functional.ThrowingConsumer;</span>
+<span class="source-line-no">028</span><span id="line-28">import io.blt.util.functional.ThrowingSupplier;</span>
 <span class="source-line-no">029</span><span id="line-29">import java.util.function.Supplier;</span>
 <span class="source-line-no">030</span><span id="line-30"></span>
 <span class="source-line-no">031</span><span id="line-31">import static java.util.Objects.nonNull;</span>
@@ -61,60 +61,68 @@
 <span class="source-line-no">048</span><span id="line-48">     *     u.setAge(15);</span>
 <span class="source-line-no">049</span><span id="line-49">     * });</span>
 <span class="source-line-no">050</span><span id="line-50">     * }&lt;/pre&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     *</span>
-<span class="source-line-no">052</span><span id="line-52">     * @param instance instance to consume and return</span>
-<span class="source-line-no">053</span><span id="line-53">     * @param consumer operation to perform on {@code instance}</span>
-<span class="source-line-no">054</span><span id="line-54">     * @param &lt;T&gt;      type of {@code instance}</span>
-<span class="source-line-no">055</span><span id="line-55">     * @return {@code instance} after accepting side effects via {@code consumer}.</span>
-<span class="source-line-no">056</span><span id="line-56">     */</span>
-<span class="source-line-no">057</span><span id="line-57">    public static &lt;T&gt; T poke(T instance, Consumer&lt;T&gt; consumer) {</span>
-<span class="source-line-no">058</span><span id="line-58">        consumer.accept(instance);</span>
-<span class="source-line-no">059</span><span id="line-59">        return instance;</span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * Calls the {@code supplier} to retrieve an instance which is mutated by the {@code consumer} then returned.</span>
-<span class="source-line-no">064</span><span id="line-64">     * e.g.</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;pre&gt;{@code</span>
-<span class="source-line-no">066</span><span id="line-66">     * var user = Obj.tap(User::new, u -&gt; {</span>
-<span class="source-line-no">067</span><span id="line-67">     *     u.setName("Greg");</span>
-<span class="source-line-no">068</span><span id="line-68">     *     u.setAge(15);</span>
-<span class="source-line-no">069</span><span id="line-69">     * });</span>
-<span class="source-line-no">070</span><span id="line-70">     * }&lt;/pre&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     *</span>
-<span class="source-line-no">072</span><span id="line-72">     * @param supplier Supplies an instance to consume and return</span>
-<span class="source-line-no">073</span><span id="line-73">     * @param consumer Operation to perform on supplied instance</span>
-<span class="source-line-no">074</span><span id="line-74">     * @param &lt;T&gt;      type of instance</span>
-<span class="source-line-no">075</span><span id="line-75">     * @return Supplied instance after applying side effects via {@code consumer}.</span>
-<span class="source-line-no">076</span><span id="line-76">     */</span>
-<span class="source-line-no">077</span><span id="line-77">    public static &lt;T&gt; T tap(Supplier&lt;T&gt; supplier, Consumer&lt;T&gt; consumer) {</span>
-<span class="source-line-no">078</span><span id="line-78">        return poke(supplier.get(), consumer);</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    /**</span>
-<span class="source-line-no">082</span><span id="line-82">     * Returns {@code value} if non-null, else invokes and returns the result of {@code supplier}.</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;p&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * Optionally, the {@code supplier} may throw which will bubble up.</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;/p&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * e.g.</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;pre&gt;{@code</span>
-<span class="source-line-no">088</span><span id="line-88">     * private URL homepageOrDefault(URL homepage) throws MalformedURLException {</span>
-<span class="source-line-no">089</span><span id="line-89">     *     return orElseGet(homepage, () -&gt; new URL("https://google.com"));</span>
-<span class="source-line-no">090</span><span id="line-90">     * }</span>
-<span class="source-line-no">091</span><span id="line-91">     * }&lt;/pre&gt;</span>
-<span class="source-line-no">092</span><span id="line-92">     *</span>
-<span class="source-line-no">093</span><span id="line-93">     * @param value    Returned if non-null</span>
-<span class="source-line-no">094</span><span id="line-94">     * @param supplier Called and returned if {@code value} is null</span>
-<span class="source-line-no">095</span><span id="line-95">     * @param &lt;T&gt;      Type of the returned value</span>
-<span class="source-line-no">096</span><span id="line-96">     * @param &lt;E&gt;      Type of {@code supplier} throwable</span>
-<span class="source-line-no">097</span><span id="line-97">     * @return {@code value} if non-null, the result of {@code supplier}</span>
-<span class="source-line-no">098</span><span id="line-98">     * @throws E {@code Throwable} that may be thrown if the {@code supplier} is invoked</span>
-<span class="source-line-no">099</span><span id="line-99">     */</span>
-<span class="source-line-no">100</span><span id="line-100">    public static &lt;T, E extends Throwable&gt; T orElseGet(T value, ThrowingSupplier&lt;T, E&gt; supplier) throws E {</span>
-<span class="source-line-no">101</span><span id="line-101">        return nonNull(value) ? value : supplier.get();</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">}</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;p&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     * Optionally, the {@code consumer} may throw which will bubble up.</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;/p&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     *</span>
+<span class="source-line-no">055</span><span id="line-55">     * @param instance instance to consume and return</span>
+<span class="source-line-no">056</span><span id="line-56">     * @param consumer operation to perform on {@code instance}</span>
+<span class="source-line-no">057</span><span id="line-57">     * @param &lt;T&gt;      type of {@code instance}</span>
+<span class="source-line-no">058</span><span id="line-58">     * @param &lt;E&gt;      type of {@code consumer} throwable</span>
+<span class="source-line-no">059</span><span id="line-59">     * @return {@code instance} after accepting side effects via {@code consumer}.</span>
+<span class="source-line-no">060</span><span id="line-60">     */</span>
+<span class="source-line-no">061</span><span id="line-61">    public static &lt;T, E extends Throwable&gt; T poke(T instance, ThrowingConsumer&lt;T, E&gt; consumer) throws E {</span>
+<span class="source-line-no">062</span><span id="line-62">        consumer.accept(instance);</span>
+<span class="source-line-no">063</span><span id="line-63">        return instance;</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    /**</span>
+<span class="source-line-no">067</span><span id="line-67">     * Calls the {@code supplier} to retrieve an instance which is mutated by the {@code consumer} then returned.</span>
+<span class="source-line-no">068</span><span id="line-68">     * e.g.</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;pre&gt;{@code</span>
+<span class="source-line-no">070</span><span id="line-70">     * var user = Obj.tap(User::new, u -&gt; {</span>
+<span class="source-line-no">071</span><span id="line-71">     *     u.setName("Greg");</span>
+<span class="source-line-no">072</span><span id="line-72">     *     u.setAge(15);</span>
+<span class="source-line-no">073</span><span id="line-73">     * });</span>
+<span class="source-line-no">074</span><span id="line-74">     * }&lt;/pre&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;p&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * Optionally, the {@code consumer} may throw which will bubble up.</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;/p&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     *</span>
+<span class="source-line-no">079</span><span id="line-79">     * @param supplier supplies an instance to consume and return</span>
+<span class="source-line-no">080</span><span id="line-80">     * @param consumer operation to perform on supplied instance</span>
+<span class="source-line-no">081</span><span id="line-81">     * @param &lt;T&gt;      type of instance</span>
+<span class="source-line-no">082</span><span id="line-82">     * @param &lt;E&gt;      type of {@code consumer} throwable</span>
+<span class="source-line-no">083</span><span id="line-83">     * @return Supplied instance after applying side effects via {@code consumer}.</span>
+<span class="source-line-no">084</span><span id="line-84">     */</span>
+<span class="source-line-no">085</span><span id="line-85">    public static &lt;T, E extends Throwable&gt; T tap(Supplier&lt;T&gt; supplier, ThrowingConsumer&lt;T, E&gt; consumer) throws E {</span>
+<span class="source-line-no">086</span><span id="line-86">        return poke(supplier.get(), consumer);</span>
+<span class="source-line-no">087</span><span id="line-87">    }</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">    /**</span>
+<span class="source-line-no">090</span><span id="line-90">     * Returns {@code value} if non-null, else invokes and returns the result of {@code supplier}.</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;p&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * Optionally, the {@code supplier} may throw which will bubble up.</span>
+<span class="source-line-no">093</span><span id="line-93">     * &lt;/p&gt;</span>
+<span class="source-line-no">094</span><span id="line-94">     * e.g.</span>
+<span class="source-line-no">095</span><span id="line-95">     * &lt;pre&gt;{@code</span>
+<span class="source-line-no">096</span><span id="line-96">     * private URL homepageOrDefault(URL homepage) throws MalformedURLException {</span>
+<span class="source-line-no">097</span><span id="line-97">     *     return orElseGet(homepage, () -&gt; new URL("https://google.com"));</span>
+<span class="source-line-no">098</span><span id="line-98">     * }</span>
+<span class="source-line-no">099</span><span id="line-99">     * }&lt;/pre&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     *</span>
+<span class="source-line-no">101</span><span id="line-101">     * @param value    returned if non-null</span>
+<span class="source-line-no">102</span><span id="line-102">     * @param supplier called and returned if {@code value} is null</span>
+<span class="source-line-no">103</span><span id="line-103">     * @param &lt;T&gt;      type of the returned value</span>
+<span class="source-line-no">104</span><span id="line-104">     * @param &lt;E&gt;      type of {@code supplier} throwable</span>
+<span class="source-line-no">105</span><span id="line-105">     * @return {@code value} if non-null, the result of {@code supplier}</span>
+<span class="source-line-no">106</span><span id="line-106">     * @throws E {@code Throwable} that may be thrown if the {@code supplier} is invoked</span>
+<span class="source-line-no">107</span><span id="line-107">     */</span>
+<span class="source-line-no">108</span><span id="line-108">    public static &lt;T, E extends Throwable&gt; T orElseGet(T value, ThrowingSupplier&lt;T, E&gt; supplier) throws E {</span>
+<span class="source-line-no">109</span><span id="line-109">        return nonNull(value) ? value : supplier.get();</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">}</span>
 
 
 
