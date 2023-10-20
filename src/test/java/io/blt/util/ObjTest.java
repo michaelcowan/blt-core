@@ -24,6 +24,7 @@
 
 package io.blt.util;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ class ObjTest {
     class Instance {
 
         @Test
-        void tapShouldReturnInstance() {
+        void pokeShouldReturnInstance() {
             var instance = new Object();
 
             var result = poke(instance, c -> {});
@@ -55,7 +56,7 @@ class ObjTest {
         }
 
         @Test
-        void tapShouldPassInstanceToConsumer() {
+        void pokeShouldPassInstanceToConsumer() {
             var instance = new Object();
             var reference = new AtomicReference<>();
 
@@ -66,7 +67,7 @@ class ObjTest {
         }
 
         @Test
-        void tapShouldOperateOnTheInstance() {
+        void pokeShouldOperateOnTheInstance() {
             var result = poke(new User(), u -> {
                 u.setName("Greg");
                 u.setAge(15);
@@ -75,6 +76,15 @@ class ObjTest {
             assertThat(result)
                     .extracting(User::getName, User::getAge)
                     .containsExactly("Greg", 15);
+        }
+
+        @Test
+        void pokeShouldBubbleUpAnyExceptionsThrownByConsumer() {
+            var exception = new IOException("mock checked exception");
+
+            assertThatException()
+                    .isThrownBy(() -> poke(new User(), u -> {throw exception;}))
+                    .isEqualTo(exception);
         }
 
     }
@@ -114,6 +124,15 @@ class ObjTest {
             assertThat(result)
                     .extracting(User::getName, User::getAge)
                     .containsExactly("Greg", 15);
+        }
+
+        @Test
+        void tapShouldBubbleUpAnyExceptionsThrownByConsumer() {
+            var exception = new IOException("mock checked exception");
+
+            assertThatException()
+                    .isThrownBy(() -> tap(User::new, u -> {throw exception;}))
+                    .isEqualTo(exception);
         }
 
     }
