@@ -24,6 +24,7 @@
 
 package io.blt.util;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -77,6 +78,15 @@ class ObjTest {
                     .containsExactly("Greg", 15);
         }
 
+        @Test
+        void pokeShouldBubbleUpAnyExceptionsThrownByConsumer() {
+            var exception = new IOException("mock checked exception");
+
+            assertThatException()
+                    .isThrownBy(() -> poke(new User(), u -> {throw exception;}))
+                    .isEqualTo(exception);
+        }
+
     }
 
     @Nested
@@ -114,6 +124,15 @@ class ObjTest {
             assertThat(result)
                     .extracting(User::getName, User::getAge)
                     .containsExactly("Greg", 15);
+        }
+
+        @Test
+        void tapShouldBubbleUpAnyExceptionsThrownByConsumer() {
+            var exception = new IOException("mock checked exception");
+
+            assertThatException()
+                    .isThrownBy(() -> tap(User::new, u -> {throw exception;}))
+                    .isEqualTo(exception);
         }
 
     }

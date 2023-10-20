@@ -31,7 +31,7 @@ e.g., to add the core library to your dependencies:
 
 #### `tap` and `poke`
 
-Return a passed or supplied value after mutating via a consumer.
+Return a passed or supplied value after mutating via a (throwing) consumer.
 
 These can be handy when building an object without the need of a helper method:
 
@@ -47,6 +47,8 @@ Or mutating an object to be passed as a parameter without the noise of a tempora
 ```java
 repository.persist(Obj.poke(user, u -> u.createDate(now())));
 ```
+
+Any exception thrown by a consumer will bubble up and be thrown by `tap` or `poke`.
 
 #### `orElseGet`
 

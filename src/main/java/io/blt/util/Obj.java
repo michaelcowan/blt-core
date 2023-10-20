@@ -24,8 +24,8 @@
 
 package io.blt.util;
 
+import io.blt.util.functional.ThrowingConsumer;
 import io.blt.util.functional.ThrowingSupplier;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static java.util.Objects.nonNull;
@@ -48,13 +48,17 @@ public final class Obj {
      *     u.setAge(15);
      * });
      * }</pre>
+     * <p>
+     * Optionally, the {@code consumer} may throw which will bubble up.
+     * </p>
      *
      * @param instance instance to consume and return
      * @param consumer operation to perform on {@code instance}
      * @param <T>      type of {@code instance}
+     * @param <E>      type of {@code consumer} throwable
      * @return {@code instance} after accepting side effects via {@code consumer}.
      */
-    public static <T> T poke(T instance, Consumer<T> consumer) {
+    public static <T, E extends Throwable> T poke(T instance, ThrowingConsumer<T, E> consumer) throws E {
         consumer.accept(instance);
         return instance;
     }
@@ -68,13 +72,17 @@ public final class Obj {
      *     u.setAge(15);
      * });
      * }</pre>
+     * <p>
+     * Optionally, the {@code consumer} may throw which will bubble up.
+     * </p>
      *
-     * @param supplier Supplies an instance to consume and return
-     * @param consumer Operation to perform on supplied instance
+     * @param supplier supplies an instance to consume and return
+     * @param consumer operation to perform on supplied instance
      * @param <T>      type of instance
+     * @param <E>      type of {@code consumer} throwable
      * @return Supplied instance after applying side effects via {@code consumer}.
      */
-    public static <T> T tap(Supplier<T> supplier, Consumer<T> consumer) {
+    public static <T, E extends Throwable> T tap(Supplier<T> supplier, ThrowingConsumer<T, E> consumer) throws E {
         return poke(supplier.get(), consumer);
     }
 
@@ -90,10 +98,10 @@ public final class Obj {
      * }
      * }</pre>
      *
-     * @param value    Returned if non-null
-     * @param supplier Called and returned if {@code value} is null
-     * @param <T>      Type of the returned value
-     * @param <E>      Type of {@code supplier} throwable
+     * @param value    returned if non-null
+     * @param supplier called and returned if {@code value} is null
+     * @param <T>      type of the returned value
+     * @param <E>      type of {@code supplier} throwable
      * @return {@code value} if non-null, the result of {@code supplier}
      * @throws E {@code Throwable} that may be thrown if the {@code supplier} is invoked
      */
