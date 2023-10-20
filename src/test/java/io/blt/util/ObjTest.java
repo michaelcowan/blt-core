@@ -46,7 +46,7 @@ class ObjTest {
     class Instance {
 
         @Test
-        void tapShouldReturnInstance() {
+        void pokeShouldReturnInstance() {
             var instance = new Object();
 
             var result = poke(instance, c -> {});
@@ -55,7 +55,7 @@ class ObjTest {
         }
 
         @Test
-        void tapShouldPassInstanceToConsumer() {
+        void pokeShouldPassInstanceToConsumer() {
             var instance = new Object();
             var reference = new AtomicReference<>();
 
@@ -66,7 +66,7 @@ class ObjTest {
         }
 
         @Test
-        void tapShouldOperateOnTheInstance() {
+        void pokeShouldOperateOnTheInstance() {
             var result = poke(new User(), u -> {
                 u.setName("Greg");
                 u.setAge(15);
