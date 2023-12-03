@@ -52,13 +52,26 @@ Any exception thrown by a consumer will bubble up and be thrown by `tap` or `pok
 
 #### `orElseGet`
 
-Returns a passed value if non-null otherwise invokes and returns the result of (throwing) supplier.
+Returns a passed value if non-null, otherwise invokes and returns the result of a (throwing) supplier.
 
 This is very similar to `Optional.ofNullable(...).orElseGet(...)` but more concise and supports suppliers that throw:
 
 ```java
 private URL homepageOrDefault(URL homepage) throws MalformedURLException {
     return Obj.orElseGet(homepage, () -> new URL("https://google.com"));
+}
+```
+
+#### `orElseOnException`
+
+Invokes and returns the result of a supplier, unless it throws an exception, in which case a passed value is returned. 
+e.g.
+
+```java
+private InputStream openFileOrResource(String name) {
+    return orElseOnException(
+            () -> new FileInputStream(name),
+            getClass().getResourceAsStream(name));
 }
 ```
 
