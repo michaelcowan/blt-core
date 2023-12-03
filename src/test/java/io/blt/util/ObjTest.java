@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
 import static io.blt.util.Obj.orElseGet;
+import static io.blt.util.Obj.orElseOnException;
 import static io.blt.util.Obj.poke;
 import static io.blt.util.Obj.tap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -162,6 +163,24 @@ class ObjTest {
         assertThatException()
                 .isThrownBy(() -> orElseGet(null, () -> {throw exception;}))
                 .isEqualTo(exception);
+    }
+
+    @Test
+    void orElseOnExceptionShouldReturnSupplierResultIfNoExceptionIsThrown() {
+        var supplierResult = "Greg";
+
+        var result = orElseOnException(() -> supplierResult, null);
+
+        assertThat(result).isEqualTo(supplierResult);
+    }
+
+    @Test
+    void orElseOnExceptionShouldReturnValueIfExceptionIsThrown() {
+        var value = "Sven";
+
+        var result = orElseOnException(() -> {throw new Exception("mock exception");}, value);
+
+        assertThat(result).isEqualTo(value);
     }
 
     public static class User {
