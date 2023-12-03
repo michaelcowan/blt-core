@@ -24,36 +24,30 @@
 
 package io.blt.util.functional;
 
-import java.util.function.Supplier;
+import org.junit.jupiter.api.Test;
 
-/**
- * Represents a supplier of results that may throw.
- *
- * @param <T> the type of results supplied by this supplier
- * @param <E> the type of {@code Throwable} that may be thrown by this supplier
- */
-@FunctionalInterface
-public interface ThrowingSupplier<T, E extends Throwable> {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    /**
-     * Returns a result.
-     *
-     * @return a result
-     * @throws E {@code Throwable} that may be thrown
-     */
-    T get() throws E;
+class ThrowingSupplierTest {
 
-    /**
-     * Returns the result of {@link ThrowingSupplier#get()} if no exception is thrown, else returns {@code value}.
-     *
-     * @param value returned if an exception is thrown when calling {@link ThrowingSupplier#get()}
-     * @return result of {@link ThrowingSupplier#get()} if no exception is thrown, else {@code value}
-     */
-    default T orOnException(T value) {
-        try {
-            return get();
-        } catch (Throwable e) {
-            return value;
-        }
+    @Test
+    void orOnExceptionShouldReturnSupplierResultIfNoExceptionIsThrown() {
+        var supplierResult = "Greg";
+
+        ThrowingSupplier<String, Exception> supplier = () -> supplierResult;
+        var result = supplier.orOnException(null);
+
+        assertThat(result).isEqualTo(supplierResult);
     }
+
+    @Test
+    void orOnExceptionShouldReturnValueIfExceptionIsThrown() {
+        var value = "Greg";
+
+        ThrowingSupplier<String, Exception> supplier = () -> {throw new Exception("mock exception");};
+        var result = supplier.orOnException(value);
+
+        assertThat(result).isEqualTo(value);
+    }
+
 }

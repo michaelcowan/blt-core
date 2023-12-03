@@ -102,11 +102,32 @@ public final class Obj {
      * @param supplier called and returned if {@code value} is null
      * @param <T>      type of the returned value
      * @param <E>      type of {@code supplier} throwable
-     * @return {@code value} if non-null, the result of {@code supplier}
+     * @return {@code value} if non-null, else the result of {@code supplier}
      * @throws E {@code Throwable} that may be thrown if the {@code supplier} is invoked
      */
     public static <T, E extends Throwable> T orElseGet(T value, ThrowingSupplier<T, E> supplier) throws E {
         return nonNull(value) ? value : supplier.get();
+    }
+
+    /**
+     * Invokes and returns the result of {@code supplier} if no exception is thrown, else returns {@code defaultValue}.
+     * e.g.
+     * <pre>{@code
+     * private InputStream openFileOrResource(String name) {
+     *     return orElseOnException(
+     *             () -> new FileInputStream(name),
+     *             getClass().getResourceAsStream(name));
+     * }
+     * }</pre>
+     *
+     * @param supplier        called and returned if no exception is thrown
+     * @param defaultValue    returned if an exception is thrown when calling {@code supplier}
+     * @param <T>             type of the returned value
+     * @param <E>             type of {@code supplier} throwable
+     * @return result of {@code supplier} if no exception is thrown, else {@code defaultValue}
+     */
+    public static <T, E extends Throwable> T orElseOnException(ThrowingSupplier<T, E> supplier, T defaultValue) {
+        return supplier.orOnException(defaultValue);
     }
 
 }
