@@ -147,12 +147,12 @@ class ObjTest {
     }
 
     @Test
-    void orElseGetShouldReturnSupplierResultIfValueIsNonNull() {
-        var value = "Louis";
+    void orElseGetShouldReturnSupplierResultIfValueIsNull() {
+        var supplierResult = "Louis";
 
-        var result = orElseGet(null, () -> value);
+        var result = orElseGet(null, () -> supplierResult);
 
-        assertThat(result).isEqualTo(value);
+        assertThat(result).isEqualTo(supplierResult);
     }
 
     @Test
