@@ -26,6 +26,8 @@ package io.blt.util;
 
 import io.blt.util.functional.ThrowingConsumer;
 import io.blt.util.functional.ThrowingSupplier;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static java.util.Objects.nonNull;
@@ -128,6 +130,32 @@ public final class Obj {
      */
     public static <T, E extends Throwable> T orElseOnException(ThrowingSupplier<T, E> supplier, T defaultValue) {
         return supplier.orOnException(defaultValue);
+    }
+
+    /**
+     * Returns a new instance of the same type as the input object if possible; otherwise, returns empty.
+     * Supports only instances of concrete types that have a public zero argument constructor.
+     * e.g.
+     * <pre>{@code
+     * public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
+     *     return newInstanceOf(map).orElse(new HashMap<>());
+     * }
+     * }</pre>
+     *
+     * @param obj object to try and create a new instance of
+     * @param <T> type of {@code obj}
+     * @return a new instance of the same type as {@code obj} or empty
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Optional<T> newInstanceOf(T obj) {
+        try {
+            return Optional.of((T) obj.getClass().getConstructor().newInstance());
+        } catch (InstantiationException
+                 | IllegalAccessException
+                 | InvocationTargetException
+                 | NoSuchMethodException e) {
+            return Optional.empty();
+        }
     }
 
 }

@@ -25,17 +25,28 @@
 package io.blt.util;
 
 import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
+import static io.blt.util.Obj.newInstanceOf;
 import static io.blt.util.Obj.orElseGet;
 import static io.blt.util.Obj.orElseOnException;
 import static io.blt.util.Obj.poke;
 import static io.blt.util.Obj.tap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 class ObjTest {
 
@@ -181,6 +192,46 @@ class ObjTest {
         var result = orElseOnException(() -> {throw new Exception("mock exception");}, value);
 
         assertThat(result).isEqualTo(value);
+    }
+
+    static Stream<Arguments> newInstanceOfShouldReturnNewInstanceOf() {
+        return Stream.of(
+                Arguments.of(String.class, "hello Worf"),
+                Arguments.of(HashMap.class, new HashMap<>(Map.of("hello", "Worf"))),
+                Arguments.of(LinkedList.class, new LinkedList<>(List.of("hello", "Worf"))));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void newInstanceOfShouldReturnNewInstanceOf(Class<?> type, Object instance) {
+        var result = newInstanceOf(instance);
+
+        assertThat(result)
+                .isNotEmpty()
+                .get()
+                .isInstanceOf(type)
+                .isNotEqualTo(instance);
+    }
+
+    static Stream<Object> newInstanceOfShouldReturnEmptyWhenObjectTypeHasNoZeroArgumentConstructor() {
+        return Stream.of(
+                Map.of("hello", "Worf"),
+                List.of("hello", "Worf"),
+                URI.create("https://sttng/worf"));
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void newInstanceOfShouldReturnEmptyWhenObjectTypeHasNoZeroArgumentConstructor(Object object) {
+        var result = newInstanceOf(object);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void newInstanceOfShouldThrowWhenArgumentIsNull() {
+        assertThatNullPointerException()
+                .isThrownBy(() -> newInstanceOf(null));
     }
 
     public static class User {

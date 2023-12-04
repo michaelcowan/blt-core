@@ -24,8 +24,6 @@
 
 package io.blt.util.functional;
 
-import java.util.function.Supplier;
-
 /**
  * Represents a supplier of results that may throw.
  *
