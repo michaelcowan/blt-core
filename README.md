@@ -75,6 +75,16 @@ private InputStream openFileOrResource(String name) {
 }
 ```
 
+#### `newInstanceOf`
+
+Creates a new instance of the same type as the input object if possible, otherwise, returns empty. e.g.
+
+```java
+public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
+    return newInstanceOf(map).orElse(new HashMap<>());
+}
+```
+
 ### `SingletonCollectors`
 
 Implementations of `Collector` that reduce to exactly one or zero elements.
