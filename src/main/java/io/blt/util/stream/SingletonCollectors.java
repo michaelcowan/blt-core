@@ -74,11 +74,11 @@ public final class SingletonCollectors {
         return new SingletonCollector<>(Container::getValue);
     }
 
-    private static class SingletonCollector<T, R> implements Collector<T, Container<T>, R> {
+    public static final class SingletonCollector<T, R> implements Collector<T, Container<T>, R> {
 
         private final Function<Container<T>, R> finisher;
 
-        public SingletonCollector(Function<Container<T>, R> finisher) {
+        private SingletonCollector(Function<Container<T>, R> finisher) {
             this.finisher = finisher;
         }
 
@@ -108,9 +108,11 @@ public final class SingletonCollectors {
         }
     }
 
-    private static final class Container<T> {
+    public static final class Container<T> {
 
         private T value;
+
+        private Container() {}
 
         public T getValue() {
             return value;

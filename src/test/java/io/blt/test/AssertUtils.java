@@ -62,4 +62,15 @@ public final class AssertUtils {
                 .withMessage("Utility class should be accessed statically and never constructed");
     }
 
+    public static void assertValidExposedPrivateImplementationClass(Class<?> clazz) {
+        assertThat(clazz)
+                .isFinal()
+                .isPublic();
+
+        assertThat(clazz.getConstructors())
+                .describedAs("All constructors must be private")
+                .extracting(Constructor::getModifiers)
+                .allMatch(Modifier::isPrivate);
+    }
+
 }
