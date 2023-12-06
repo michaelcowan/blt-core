@@ -29,6 +29,8 @@ e.g., to add the core library to your dependencies:
 
 ### `Obj`
 
+> Static utility methods for operating on `Object`
+
 #### `tap` and `poke`
 
 Return a passed or supplied value after mutating via a (throwing) consumer.
@@ -83,6 +85,24 @@ Creates a new instance of the same type as the input object if possible, otherwi
 public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
     return newInstanceOf(map).orElse(new HashMap<>());
 }
+```
+
+### `Ctr`
+
+> Static utility methods for operating on `Collection`
+> 
+> For methods that accept and return a container, the result will be of the [same type if possible](#newInstanceOf)
+
+#### `transformValues`
+
+Returns a new `Map` containing the entries of another with a transform applied to the values. 
+If possible, the returned `Map` is of the same type as the passed `Map`.
+e.g.
+
+```java
+var birthdays = transformValues(
+        Map.of("Greg", Month.NOVEMBER, "Phil", Month.OCTOBER, "Louis", Month.FEBRUARY), 
+        e -> e.getDisplayName(TextStyle.FULL, Locale.ENGLISH));
 ```
 
 ### `SingletonCollectors`
