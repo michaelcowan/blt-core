@@ -32,6 +32,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static io.blt.test.AssertUtils.assertValidExposedPrivateImplementationClass;
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
@@ -41,6 +42,12 @@ class SingletonCollectorsTest {
     @Test
     void shouldBeValidUtilityClass() throws NoSuchMethodException {
         assertValidUtilityClass(SingletonCollectors.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(classes = {SingletonCollectors.SingletonCollector.class, SingletonCollectors.Container.class})
+    void shouldBeValidExposedPrivateImplementationClass(Class<?> clazz) {
+        assertValidExposedPrivateImplementationClass(clazz);
     }
 
     @Nested
