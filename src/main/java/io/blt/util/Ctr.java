@@ -51,7 +51,7 @@ public final class Ctr {
      * e.g.
      * <pre>{@code
      * var scores = Map.of("Louis", 95, "Greg", 92, "Mike", 71, "Phil", 86);
-     * var grades = transformValues(scores, score -> {
+     * var grades = Ctr.transformValues(scores, score -> {
      *     if (score >= 90) {
      *         return "A";
      *     } else if (score >= 80) {

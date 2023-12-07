@@ -71,7 +71,7 @@ e.g.
 
 ```java
 private InputStream openFileOrResource(String name) {
-    return orElseOnException(
+    return Obj.orElseOnException(
             () -> new FileInputStream(name),
             getClass().getResourceAsStream(name));
 }
@@ -83,7 +83,7 @@ Creates a new instance of the same type as the input object if possible, otherwi
 
 ```java
 public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
-    return newInstanceOf(map).orElse(new HashMap<>());
+    return Obj.newInstanceOf(map).orElse(new HashMap<>());
 }
 ```
 
@@ -100,7 +100,7 @@ If possible, the returned `Map` is of the same type as the passed `Map`.
 e.g.
 
 ```java
-var birthdays = transformValues(
+var birthdays = Ctr.transformValues(
         Map.of("Greg", Month.NOVEMBER, "Phil", Month.OCTOBER, "Louis", Month.FEBRUARY), 
         e -> e.getDisplayName(TextStyle.FULL, Locale.ENGLISH));
 ```
