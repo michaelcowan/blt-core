@@ -96,7 +96,7 @@ public final class Obj {
      * e.g.
      * <pre>{@code
      * private URL homepageOrDefault(URL homepage) throws MalformedURLException {
-     *     return orElseGet(homepage, () -> new URL("https://google.com"));
+     *     return Obj.orElseGet(homepage, () -> new URL("https://google.com"));
      * }
      * }</pre>
      *
@@ -116,7 +116,7 @@ public final class Obj {
      * e.g.
      * <pre>{@code
      * private InputStream openFileOrResource(String name) {
-     *     return orElseOnException(
+     *     return Obj.orElseOnException(
      *             () -> new FileInputStream(name),
      *             getClass().getResourceAsStream(name));
      * }
@@ -138,7 +138,7 @@ public final class Obj {
      * e.g.
      * <pre>{@code
      * public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
-     *     return newInstanceOf(map).orElse(new HashMap<>());
+     *     return Obj.newInstanceOf(map).orElse(new HashMap<>());
      * }
      * }</pre>
      *
