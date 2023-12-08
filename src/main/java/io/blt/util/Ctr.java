@@ -31,9 +31,9 @@ import java.util.Map;
 import static io.blt.util.Obj.newInstanceOf;
 
 /**
- * Static utility methods for operating on implementations of {@code Collection} i.e. containers.
+ * Static utility methods for operating on implementations of {@code Collection} and {@code Map} i.e. Containers.
  * <p>
- * For methods that return a modification of a passed collection, the result will be of the same type if possible.
+ * For methods that return a modification of a passed container, the result will be of the same type if possible.
  * This is accomplished using {@link Obj#newInstanceOf(Object)} and its limitations apply.
  * </p>
  */

@@ -89,7 +89,7 @@ public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
 
 ### `Ctr`
 
-> Static utility methods for operating on `Collection`
+> Static utility methods for operating on `Collection` and `Map` i.e. Containers
 > 
 > For methods that accept and return a container, the result will be of the [same type if possible](#newInstanceOf)
 
