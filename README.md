@@ -15,7 +15,7 @@ e.g., to add the core library to your dependencies:
 <dependency>
     <groupId>io.blt</groupId>
     <artifactId>blt-core</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 

@@ -44,9 +44,9 @@
 <span class="source-line-no">031</span><span id="line-31">import static io.blt.util.Obj.newInstanceOf;</span>
 <span class="source-line-no">032</span><span id="line-32"></span>
 <span class="source-line-no">033</span><span id="line-33">/**</span>
-<span class="source-line-no">034</span><span id="line-34"> * Static utility methods for operating on implementations of {@code Collection} i.e. containers.</span>
+<span class="source-line-no">034</span><span id="line-34"> * Static utility methods for operating on implementations of {@code Collection} and {@code Map} i.e. Containers.</span>
 <span class="source-line-no">035</span><span id="line-35"> * &lt;p&gt;</span>
-<span class="source-line-no">036</span><span id="line-36"> * For methods that return a modification of a passed collection, the result will be of the same type if possible.</span>
+<span class="source-line-no">036</span><span id="line-36"> * For methods that return a modification of a passed container, the result will be of the same type if possible.</span>
 <span class="source-line-no">037</span><span id="line-37"> * This is accomplished using {@link Obj#newInstanceOf(Object)} and its limitations apply.</span>
 <span class="source-line-no">038</span><span id="line-38"> * &lt;/p&gt;</span>
 <span class="source-line-no">039</span><span id="line-39"> */</span>
@@ -64,7 +64,7 @@
 <span class="source-line-no">051</span><span id="line-51">     * e.g.</span>
 <span class="source-line-no">052</span><span id="line-52">     * &lt;pre&gt;{@code</span>
 <span class="source-line-no">053</span><span id="line-53">     * var scores = Map.of("Louis", 95, "Greg", 92, "Mike", 71, "Phil", 86);</span>
-<span class="source-line-no">054</span><span id="line-54">     * var grades = transformValues(scores, score -&gt; {</span>
+<span class="source-line-no">054</span><span id="line-54">     * var grades = Ctr.transformValues(scores, score -&gt; {</span>
 <span class="source-line-no">055</span><span id="line-55">     *     if (score &gt;= 90) {</span>
 <span class="source-line-no">056</span><span id="line-56">     *         return "A";</span>
 <span class="source-line-no">057</span><span id="line-57">     *     } else if (score &gt;= 80) {</span>
