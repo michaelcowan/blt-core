@@ -28,6 +28,7 @@ import io.blt.util.functional.ThrowingConsumer;
 import io.blt.util.functional.ThrowingSupplier;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static java.util.Objects.nonNull;
@@ -122,14 +123,65 @@ public final class Obj {
      * }
      * }</pre>
      *
-     * @param supplier        called and returned if no exception is thrown
-     * @param defaultValue    returned if an exception is thrown when calling {@code supplier}
-     * @param <T>             type of the returned value
-     * @param <E>             type of {@code supplier} throwable
+     * @param supplier     called and returned if no exception is thrown
+     * @param defaultValue returned if an exception is thrown when calling {@code supplier}
+     * @param <T>          type of the returned value
+     * @param <E>          type of {@code supplier} throwable
      * @return result of {@code supplier} if no exception is thrown, else {@code defaultValue}
      */
     public static <T, E extends Throwable> T orElseOnException(ThrowingSupplier<T, E> supplier, T defaultValue) {
         return supplier.orOnException(defaultValue);
+    }
+
+    /**
+     * Throws the specified {@code throwable} if the given {@code value} satisfies the provided {@code predicate}.
+     * For convenience, {@code value} is returned.
+     * e.g.
+     * <pre>{@code
+     * public Map<String, String> loadProperties() {
+     *     return throwIf(Properties.loadFromJson(FILENAME), Map::isEmpty,
+     *             () -> new IllegalStateException("Properties must not be empty"));
+     * }
+     * }</pre>
+     *
+     * @param value     the value to be checked
+     * @param predicate the predicate to be evaluated
+     * @param throwable the supplier for the throwable to be thrown
+     * @param <T>       the type of the value
+     * @param <E>       the type of the throwable
+     * @return {@code value}
+     * @throws E if the given {@code value} satisfies the provided {@code predicate}
+     * @see Obj#throwUnless(Object, Predicate, Supplier)
+     */
+    public static <T, E extends Throwable> T throwIf(
+            T value, Predicate<? super T> predicate, Supplier<? extends E> throwable) throws E {
+        if (predicate.test(value)) {
+            throw throwable.get();
+        }
+        return value;
+    }
+
+    /**
+     * Throws the specified {@code throwable} if the given {@code value} does not satisfy the provided {@code predicate}.
+     * For convenience, {@code value} is returned.
+     * e.g.
+     * <pre>{@code
+     * throwUnless(properties, p -> p.containsKey("host"),
+     *         () -> new IllegalStateException("Properties must contain a host"));
+     * }</pre>
+     *
+     * @param value     the value to be checked
+     * @param predicate the predicate to be evaluated
+     * @param throwable the supplier for the throwable to be thrown
+     * @param <T>       the type of the value
+     * @param <E>       the type of the throwable
+     * @return {@code value}
+     * @throws E if the given {@code value} does not satisfy the provided {@code predicate}
+     * @see Obj#throwIf(Object, Predicate, Supplier)
+     */
+    public static <T, E extends Throwable> T throwUnless(
+            T value, Predicate<? super T> predicate, Supplier<? extends E> throwable) throws E {
+        return throwIf(value, predicate.negate(), throwable);
     }
 
     /**

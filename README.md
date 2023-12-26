@@ -77,6 +77,18 @@ private InputStream openFileOrResource(String name) {
 }
 ```
 
+#### `throwIf` and `throwUnless`
+
+Throws a provided exception if the given `value` satisfies (or doesn't satisfy) the provided `predicate`.
+e.g.
+
+```java
+public Map<String, String> loadProperties() {
+    return throwIf(Properties.loadFromJson(FILENAME), Map::isEmpty,
+            () -> new IllegalStateException("Properties must not be empty"));
+}
+```
+
 #### `newInstanceOf`
 
 Creates a new instance of the same type as the input object if possible, otherwise, returns empty. e.g.
