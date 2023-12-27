@@ -84,7 +84,7 @@ e.g.
 
 ```java
 public Map<String, String> loadProperties() {
-    return throwIf(Properties.loadFromJson(FILENAME), Map::isEmpty,
+    return Obj.throwIf(Properties.loadFromJson(FILENAME), Map::isEmpty,
             () -> new IllegalStateException("Properties must not be empty"));
 }
 ```
