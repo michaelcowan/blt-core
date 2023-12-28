@@ -117,6 +117,40 @@ var birthdays = Ctr.transformValues(
         e -> e.getDisplayName(TextStyle.FULL, Locale.ENGLISH));
 ```
 
+#### `computeIfAbsent`
+
+Computes a value for a `Map` if one is not currently present and returns the value.
+
+This is very similar to `map.computeIfAbsent(key, compute)` but supports a Function that throws:
+
+```java
+private final Map<URL, String> cache = new HashMap<>();
+
+public String fetch(URL url) throws IOException {
+    return Ctr.computeIfAbsent(cache, url, this::get);
+}
+
+private String get(URL url) throws IOException {
+    try (var stream = url.openStream()) {
+        return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+    }
+}
+```
+
+As well as a Supplier that throws:
+
+```java
+private final Map<URL, String> cache = new HashMap<>();
+
+public String fetch(URL url) throws IOException {
+    return Ctr.computeIfAbsent(cache, url, () -> {
+        try (var stream = url.openStream()) {
+            return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+        }
+    });
+}
+```
+
 ### `SingletonCollectors`
 
 Implementations of `Collector` that reduce to exactly one or zero elements.
