@@ -32,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -103,62 +104,130 @@ class CtrTest {
                 .isEqualTo(exception);
     }
 
-    @Test
-    void computeIfAbsentShouldReturnValueAndNotModifyMapWhenValueIsPresent() {
-        var entries = Map.of("Link", "Master Sword");
-        var map = new HashMap<>(entries);
+    @Nested
+    class UsingFunction {
 
-        var result = computeIfAbsent(map, "Link", x -> fail("Should not have executed compute function"));
+        @Test
+        void computeIfAbsentShouldReturnValueAndNotModifyMapWhenValueIsPresent() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
 
-        assertThat(result)
-                .isEqualTo("Master Sword");
+            var result = computeIfAbsent(map, "Link", x -> fail("Should not have executed compute function"));
 
-        assertThat(map)
-                .containsExactlyEntriesOf(entries);
+            assertThat(result)
+                    .isEqualTo("Master Sword");
+
+            assertThat(map)
+                    .containsExactlyEntriesOf(entries);
+        }
+
+        @Test
+        void computeIfAbsentShouldComputeAndReturnValueAndModifyMapWhenValueIsNotPresent() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
+
+            var result = computeIfAbsent(map, "Mario", x -> "Super Mushroom");
+
+            assertThat(result)
+                    .isEqualTo("Super Mushroom");
+
+            assertThat(map)
+                    .hasSize(2)
+                    .containsAllEntriesOf(entries)
+                    .containsEntry("Mario", "Super Mushroom");
+        }
+
+        @Test
+        void computeIfAbsentShouldReturnNullAndNotModifyMapWhenComputeReturnsNull() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
+
+            var result = computeIfAbsent(map, "Mario", x -> null);
+
+            assertThat(result)
+                    .isNull();
+
+            assertThat(map)
+                    .containsExactlyEntriesOf(entries);
+        }
+
+        @Test
+        void computeIfAbsentShouldBubbleUpExceptionAndNotModifyMapWhenComputeThrows() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
+            var exception = new Exception("Mock exception");
+
+            assertThatException()
+                    .isThrownBy(() -> computeIfAbsent(map, "Mario", x -> {throw exception;}))
+                    .isEqualTo(exception);
+
+            assertThat(map)
+                    .containsExactlyEntriesOf(entries);
+        }
+
     }
 
-    @Test
-    void computeIfAbsentShouldComputeAndReturnValueAndModifyMapWhenValueIsNotPresent() {
-        var entries = Map.of("Link", "Master Sword");
-        var map = new HashMap<>(entries);
+    @Nested
+    class UsingSupplier {
 
-        var result = computeIfAbsent(map, "Mario", x -> "Super Mushroom");
+        @Test
+        void computeIfAbsentShouldReturnValueAndNotModifyMapWhenValueIsPresent() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
 
-        assertThat(result)
-                .isEqualTo("Super Mushroom");
+            var result = computeIfAbsent(map, "Link", () -> fail("Should not have executed compute function"));
 
-        assertThat(map)
-                .hasSize(2)
-                .containsAllEntriesOf(entries)
-                .containsEntry("Mario", "Super Mushroom");
-    }
+            assertThat(result)
+                    .isEqualTo("Master Sword");
 
-    @Test
-    void computeIfAbsentShouldReturnNullAndNotModifyMapWhenComputeReturnsNull() {
-        var entries = Map.of("Link", "Master Sword");
-        var map = new HashMap<>(entries);
+            assertThat(map)
+                    .containsExactlyEntriesOf(entries);
+        }
 
-        var result = computeIfAbsent(map, "Mario", x -> null);
+        @Test
+        void computeIfAbsentShouldComputeAndReturnValueAndModifyMapWhenValueIsNotPresent() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
 
-        assertThat(result)
-                .isNull();
+            var result = computeIfAbsent(map, "Mario", () -> "Super Mushroom");
 
-        assertThat(map)
-                .containsExactlyEntriesOf(entries);
-    }
+            assertThat(result)
+                    .isEqualTo("Super Mushroom");
 
-    @Test
-    void computeIfAbsentShouldBubbleUpExceptionAndNotModifyMapWhenComputeThrows() {
-        var entries = Map.of("Link", "Master Sword");
-        var map = new HashMap<>(entries);
-        var exception = new Exception("Mock exception");
+            assertThat(map)
+                    .hasSize(2)
+                    .containsAllEntriesOf(entries)
+                    .containsEntry("Mario", "Super Mushroom");
+        }
 
-        assertThatException()
-                .isThrownBy(() -> computeIfAbsent(map, "Mario", x -> {throw exception;}))
-                .isEqualTo(exception);
+        @Test
+        void computeIfAbsentShouldReturnNullAndNotModifyMapWhenComputeReturnsNull() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
 
-        assertThat(map)
-                .containsExactlyEntriesOf(entries);
+            var result = computeIfAbsent(map, "Mario", () -> null);
+
+            assertThat(result)
+                    .isNull();
+
+            assertThat(map)
+                    .containsExactlyEntriesOf(entries);
+        }
+
+        @Test
+        void computeIfAbsentShouldBubbleUpExceptionAndNotModifyMapWhenComputeThrows() {
+            var entries = Map.of("Link", "Master Sword");
+            var map = new HashMap<>(entries);
+            var exception = new Exception("Mock exception");
+
+            assertThatException()
+                    .isThrownBy(() -> computeIfAbsent(map, "Mario", () -> {throw exception;}))
+                    .isEqualTo(exception);
+
+            assertThat(map)
+                    .containsExactlyEntriesOf(entries);
+        }
+
     }
 
 

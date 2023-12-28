@@ -25,6 +25,7 @@
 package io.blt.util;
 
 import io.blt.util.functional.ThrowingFunction;
+import io.blt.util.functional.ThrowingSupplier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,6 +130,7 @@ public final class Ctr {
      * }
      * return map.get(key);
      * }</pre>
+     * @see Ctr#computeIfAbsent(Map, Object, ThrowingSupplier)
      */
     public static <K, V, E extends Throwable> V computeIfAbsent(
             Map<K, V> map, K key, ThrowingFunction<? super K, ? extends V, E> compute) throws E {
@@ -139,6 +141,51 @@ public final class Ctr {
             }
             return value;
         });
+    }
+
+    /**
+     * For the specified {@code map}, if there is no value for the specified {@code key} then {@code compute} will be
+     * called and the result entered into the map. If a value is present, then it is returned.
+     * e.g.
+     * <pre>{@code
+     * private final Map<URL, String> cache = new HashMap<>();
+     *
+     * public String fetch(URL url) throws IOException {
+     *     return Ctr.computeIfAbsent(cache, url, () -> {
+     *         try (var stream = url.openStream()) {
+     *             return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+     *         }
+     *     });
+     * }
+     * }</pre>
+     *
+     * <p>If {@code compute} returns {@code null}, then the map is not modified and {@code null} is returned.
+     *
+     * <p>If {@code compute} throws, then map is not modified and the exception will bubble up.
+     *
+     * @param map     {@link Map} whose value is returned and may be computed
+     * @param key     key with which the specified value is to be associated
+     * @param compute the computation supplier to use if the value is absent
+     * @param <K>     {@code map} key type
+     * @param <V>     {@code map} value type
+     * @param <E>     type of {@code compute} throwable
+     * @return the existing or computed value associated with the key, or null if the computed value is null
+     * @throws E if an exception is thrown by the computation supplier
+     * @implNote The implementation is equivalent to the following:
+     * <pre> {@code
+     * if (map.get(key) == null) {
+     *     V value = compute.apply(key);
+     *     if (value != null) {
+     *         map.put(key, value);
+     *     }
+     * }
+     * return map.get(key);
+     * }</pre>
+     * @see Ctr#computeIfAbsent(Map, Object, ThrowingFunction)
+     */
+    public static <K, V, E extends Throwable> V computeIfAbsent(
+            Map<K, V> map, K key, ThrowingSupplier<? extends V, E> compute) throws E {
+        return computeIfAbsent(map, key, unused -> compute.get());
     }
 
     private static final class DefaultMap<K, V> extends HashMap<K, V> {}
