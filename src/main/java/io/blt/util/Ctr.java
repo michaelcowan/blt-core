@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.blt.util.Obj.newInstanceOf;
+import static java.util.Objects.nonNull;
 
 /**
  * Static utility methods for operating on implementations of {@code Collection} and {@code Map} i.e. Containers.
@@ -86,6 +87,58 @@ public final class Ctr {
         }
 
         return result instanceof DefaultMap ? Map.copyOf(result) : result;
+    }
+
+    /**
+     * For the specified {@code map}, if there is no value for the specified {@code key} then {@code compute} will be
+     * called and the result entered into the map. If a value is present, then it is returned.
+     * e.g.
+     * <pre>{@code
+     * private final Map<URL, String> cache = new HashMap<>();
+     *
+     * public String fetch(URL url) throws IOException {
+     *     return Ctr.computeIfAbsent(cache, url, this::get);
+     * }
+     *
+     * private String get(URL url) throws IOException {
+     *     try (var stream = url.openStream()) {
+     *         return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+     *     }
+     * }
+     * }</pre>
+     *
+     * <p>If {@code compute} returns {@code null}, then the map is not modified and {@code null} is returned.
+     *
+     * <p>If {@code compute} throws, then map is not modified and the exception will bubble up.
+     *
+     * @param map     {@link Map} whose value is returned and may be computed
+     * @param key     key with which the specified value is to be associated
+     * @param compute the computation function to use if the value is absent
+     * @param <K>     {@code map} key type
+     * @param <V>     {@code map} value type
+     * @param <E>     type of {@code compute} throwable
+     * @return the existing or computed value associated with the key, or null if the computed value is null
+     * @throws E if an exception is thrown by the computation function
+     * @implNote The implementation is equivalent to the following:
+     * <pre> {@code
+     * if (map.get(key) == null) {
+     *     V value = compute.apply(key);
+     *     if (value != null) {
+     *         map.put(key, value);
+     *     }
+     * }
+     * return map.get(key);
+     * }</pre>
+     */
+    public static <K, V, E extends Throwable> V computeIfAbsent(
+            Map<K, V> map, K key, ThrowingFunction<? super K, ? extends V, E> compute) throws E {
+        return Obj.orElseGet(map.get(key), () -> {
+            var value = compute.apply(key);
+            if (nonNull(value)) {
+                map.put(key, value);
+            }
+            return value;
+        });
     }
 
     private static final class DefaultMap<K, V> extends HashMap<K, V> {}
