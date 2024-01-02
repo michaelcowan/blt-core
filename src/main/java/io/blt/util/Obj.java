@@ -35,6 +35,8 @@ import static java.util.Objects.nonNull;
 
 /**
  * Static utility methods for operating on {@code Object}.
+ *
+ * <p>Includes object construction, mutation, fallbacks and validation.</p>
  */
 public final class Obj {
 
