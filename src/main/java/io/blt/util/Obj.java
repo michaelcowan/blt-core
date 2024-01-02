@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Michael Cowan
+ * Copyright (c) 2023-2024 Michael Cowan
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -130,7 +130,11 @@ public final class Obj {
      * @return result of {@code supplier} if no exception is thrown, else {@code defaultValue}
      */
     public static <T, E extends Throwable> T orElseOnException(ThrowingSupplier<T, E> supplier, T defaultValue) {
-        return supplier.orOnException(defaultValue);
+        try {
+            return supplier.get();
+        } catch (Throwable e) {
+            return defaultValue;
+        }
     }
 
     /**
