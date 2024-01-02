@@ -14,7 +14,7 @@
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * MIT License</span>
 <span class="source-line-no">003</span><span id="line-3"> *</span>
-<span class="source-line-no">004</span><span id="line-4"> * Copyright (c) 2023 Michael Cowan</span>
+<span class="source-line-no">004</span><span id="line-4"> * Copyright (c) 2023-2024 Michael Cowan</span>
 <span class="source-line-no">005</span><span id="line-5"> *</span>
 <span class="source-line-no">006</span><span id="line-6"> * Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="source-line-no">007</span><span id="line-7"> * of this software and associated documentation files (the "Software"), to deal</span>
@@ -39,24 +39,27 @@
 <span class="source-line-no">026</span><span id="line-26"></span>
 <span class="source-line-no">027</span><span id="line-27">/**</span>
 <span class="source-line-no">028</span><span id="line-28"> * Represents a function that may throw and accepts one argument and produces a result.</span>
-<span class="source-line-no">029</span><span id="line-29"> *</span>
-<span class="source-line-no">030</span><span id="line-30"> * @param &lt;T&gt; the type of argument consumed by this function</span>
-<span class="source-line-no">031</span><span id="line-31"> * @param &lt;R&gt; the type of results returned by this function</span>
-<span class="source-line-no">032</span><span id="line-32"> * @param &lt;E&gt; the type of {@code Throwable} that may be thrown by this function</span>
-<span class="source-line-no">033</span><span id="line-33"> */</span>
-<span class="source-line-no">034</span><span id="line-34">@FunctionalInterface</span>
-<span class="source-line-no">035</span><span id="line-35">public interface ThrowingFunction&lt;T, R, E extends Throwable&gt; {</span>
-<span class="source-line-no">036</span><span id="line-36"></span>
-<span class="source-line-no">037</span><span id="line-37">    /**</span>
-<span class="source-line-no">038</span><span id="line-38">     * Applies this function to the given argument.</span>
-<span class="source-line-no">039</span><span id="line-39">     *</span>
-<span class="source-line-no">040</span><span id="line-40">     * @param t the function argument</span>
-<span class="source-line-no">041</span><span id="line-41">     * @return the function result</span>
-<span class="source-line-no">042</span><span id="line-42">     * @throws E {@code Throwable} that may be thrown</span>
-<span class="source-line-no">043</span><span id="line-43">     */</span>
-<span class="source-line-no">044</span><span id="line-44">    R apply(T t) throws E;</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">}</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;p&gt;Like {@code Function} but able to throw an exception&lt;/p&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> *</span>
+<span class="source-line-no">031</span><span id="line-31"> * @param &lt;T&gt; the type of argument consumed by this function</span>
+<span class="source-line-no">032</span><span id="line-32"> * @param &lt;R&gt; the type of results returned by this function</span>
+<span class="source-line-no">033</span><span id="line-33"> * @param &lt;E&gt; the type of {@code Throwable} that may be thrown by this function</span>
+<span class="source-line-no">034</span><span id="line-34"> * @see java.util.function.Function</span>
+<span class="source-line-no">035</span><span id="line-35"> */</span>
+<span class="source-line-no">036</span><span id="line-36">@FunctionalInterface</span>
+<span class="source-line-no">037</span><span id="line-37">public interface ThrowingFunction&lt;T, R, E extends Throwable&gt; {</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    /**</span>
+<span class="source-line-no">040</span><span id="line-40">     * Applies this function to the given argument.</span>
+<span class="source-line-no">041</span><span id="line-41">     *</span>
+<span class="source-line-no">042</span><span id="line-42">     * @param t the function argument</span>
+<span class="source-line-no">043</span><span id="line-43">     * @return the function result</span>
+<span class="source-line-no">044</span><span id="line-44">     * @throws E {@code Throwable} that may be thrown</span>
+<span class="source-line-no">045</span><span id="line-45">     * @see java.util.function.Function#apply(Object)</span>
+<span class="source-line-no">046</span><span id="line-46">     */</span>
+<span class="source-line-no">047</span><span id="line-47">    R apply(T t) throws E;</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">}</span>
 
 
 
