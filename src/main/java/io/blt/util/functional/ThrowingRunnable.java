@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023-2024 Michael Cowan
+ * Copyright (c) 2024 Michael Cowan
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,23 +25,21 @@
 package io.blt.util.functional;
 
 /**
- * Represents an operation that accepts a single input argument that may throw.
- * <p>Like {@code Consumer} but able to throw an exception</p>
+ * Represents an operation that may throw.
+ * <p>Like {@code Runnable} but able to throw an exception</p>
  *
- * @param <T> the type of argument consumed by this consumer
- * @param <E> the type of {@code Throwable} that may be thrown by this consumer
- * @see java.util.function.Consumer
+ * @param <E> the type of {@code Throwable} that may be thrown by this runnable
+ * @see java.lang.Runnable
  */
 @FunctionalInterface
-public interface ThrowingConsumer<T, E extends Throwable> {
+public interface ThrowingRunnable<E extends Throwable> {
 
     /**
-     * Performs this operation on the given argument.
+     * Performs this operation.
      *
-     * @param t the input argument
      * @throws E {@code Throwable} that may be thrown
-     * @see java.util.function.Consumer#accept(Object)
+     * @see Runnable#run()
      */
-    void accept(T t) throws E;
+    void run() throws E;
 
 }
