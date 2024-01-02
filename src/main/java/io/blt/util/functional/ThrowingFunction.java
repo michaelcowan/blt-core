@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Michael Cowan
+ * Copyright (c) 2023-2024 Michael Cowan
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,12 @@ package io.blt.util.functional;
 
 /**
  * Represents a function that may throw and accepts one argument and produces a result.
+ * <p>Like {@code Function} but able to throw an exception</p>
  *
  * @param <T> the type of argument consumed by this function
  * @param <R> the type of results returned by this function
  * @param <E> the type of {@code Throwable} that may be thrown by this function
+ * @see java.util.function.Function
  */
 @FunctionalInterface
 public interface ThrowingFunction<T, R, E extends Throwable> {
@@ -40,6 +42,7 @@ public interface ThrowingFunction<T, R, E extends Throwable> {
      * @param t the function argument
      * @return the function result
      * @throws E {@code Throwable} that may be thrown
+     * @see java.util.function.Function#apply(Object)
      */
     R apply(T t) throws E;
 

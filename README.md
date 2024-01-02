@@ -30,6 +30,8 @@ e.g., to add the core library to your dependencies:
 ### `Obj`
 
 > Static utility methods for operating on `Object`
+> 
+> Includes object construction, mutation, fallbacks and validation
 
 #### `tap` and `poke`
 
@@ -127,6 +129,32 @@ This is very similar to `map.computeIfAbsent(...)` but supports both functions a
 public String fetch(URL url) throws IOException {
     return Ctr.computeIfAbsent(cache, url, () ->
             IOUtils.toString(url, StandardCharsets.UTF_8));
+}
+```
+
+### `Ex`
+
+> Static utility methods centred around `Exception` and `Throwable`
+> 
+> Includes raising and handling exceptions
+
+#### `transformExceptions`
+
+Executes a function, transforming any thrown exception.
+
+This can be useful when a method or lambda throws many checked exception types which should be mapped to a higher-level
+exception.
+
+e.g. say we have a custom `XmlProcessingException` that we want to raise for any exception related to parsing XML:
+
+```java
+public Document parseXml(String pathname) throws XmlProcessingException {
+    return transformExceptions(
+            () -> DocumentBuilderFactory
+                    .newInstance()
+                    .newDocumentBuilder()       // throws ParserConfigurationException
+                    .parse(new File(pathname)), // throws SAXException, IOException
+            XmlProcessingException::new);
 }
 ```
 
