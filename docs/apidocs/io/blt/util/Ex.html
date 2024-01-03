@@ -98,15 +98,14 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#transformExceptions(io.blt.util.functional.ThrowingRunnable,java.util.function.Function)" class="member-name-link">transformExceptions</a><wbr>(<a href="functional/ThrowingRunnable.html" title="interface in io.blt.util.functional">ThrowingRunnable</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;runnable,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>,<wbr>E&gt;&nbsp;transformer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Executes a runnable, transforming any thrown exception using a specified function
- e.g.,</div>
+<div class="block">Executes a runnable, transforming any thrown <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> using a specified function.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;R,<wbr>
 E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;<br>R</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#transformExceptions(io.blt.util.functional.ThrowingSupplier,java.util.function.Function)" class="member-name-link">transformExceptions</a><wbr>(<a href="functional/ThrowingSupplier.html" title="interface in io.blt.util.functional">ThrowingSupplier</a>&lt;R,<wbr>? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;supplier,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>,<wbr>E&gt;&nbsp;transformer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Executes a supplier, transforming any thrown exception using a specified function.</div>
+<div class="block">Executes a supplier, transforming any thrown <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> using a specified function.</div>
 </div>
 </div>
 </div>
@@ -129,11 +128,13 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
 <section class="detail" id="transformExceptions(io.blt.util.functional.ThrowingSupplier,java.util.function.Function)">
 <h3>transformExceptions</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;R,<wbr>
-E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="return-type">R</span>&nbsp;<span class="element-name"><a href="../../../src-html/io/blt/util/Ex.html#line-62">transformExceptions</a></span><wbr><span class="parameters">(<a href="functional/ThrowingSupplier.html" title="interface in io.blt.util.functional">ThrowingSupplier</a>&lt;R,<wbr>? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;supplier,
+E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="return-type">R</span>&nbsp;<span class="element-name"><a href="../../../src-html/io/blt/util/Ex.html#line-64">transformExceptions</a></span><wbr><span class="parameters">(<a href="functional/ThrowingSupplier.html" title="interface in io.blt.util.functional">ThrowingSupplier</a>&lt;R,<wbr>? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;supplier,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>,<wbr>E&gt;&nbsp;transformer)</span>
                                                      throws <span class="exceptions">E</span></div>
-<div class="block">Executes a supplier, transforming any thrown exception using a specified function.
- e.g., say we have a custom high-level <code>XmlProcessingException</code> that we want to raise when parsing XML:
+<div class="block">Executes a supplier, transforming any thrown <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> using a specified function.
+ A thrown <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link"><code>RuntimeException</code></a> will bubble up unaltered.
+
+ <p>e.g., a custom high-level <code>XmlProcessingException</code> that we want to raise when parsing XML:</p>
  <pre><code>
  public Document parseXml(String pathname) throws XmlProcessingException {
      return Ex.transformExceptions(
@@ -161,11 +162,13 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
 <li>
 <section class="detail" id="transformExceptions(io.blt.util.functional.ThrowingRunnable,java.util.function.Function)">
 <h3>transformExceptions</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/io/blt/util/Ex.html#line-98">transformExceptions</a></span><wbr><span class="parameters">(<a href="functional/ThrowingRunnable.html" title="interface in io.blt.util.functional">ThrowingRunnable</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;runnable,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/io/blt/util/Ex.html#line-102">transformExceptions</a></span><wbr><span class="parameters">(<a href="functional/ThrowingRunnable.html" title="interface in io.blt.util.functional">ThrowingRunnable</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;&nbsp;runnable,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>,<wbr>E&gt;&nbsp;transformer)</span>
                                                       throws <span class="exceptions">E</span></div>
-<div class="block">Executes a runnable, transforming any thrown exception using a specified function
- e.g.,
+<div class="block">Executes a runnable, transforming any thrown <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link"><code>Exception</code></a> using a specified function.
+ A thrown <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link"><code>RuntimeException</code></a> will bubble up unaltered.
+
+ <p>e.g.,</p>
  <pre><code>
  public void appendFormattedDateToFile(String date, String fileName) throws LoggingException {
      Ex.transformExceptions(
