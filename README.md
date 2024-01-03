@@ -140,7 +140,8 @@ public String fetch(URL url) throws IOException {
 
 #### `transformExceptions`
 
-Executes a function, transforming any thrown exception.
+Executes a function, transforming any thrown checked exceptions (i.e., `Exception`).
+Unchecked exceptions (i.e., `RuntimeException`) will bubble up unaltered.
 
 This can be useful when a method or lambda throws many checked exception types which should be mapped to a higher-level
 exception.

@@ -36,11 +36,14 @@ import static io.blt.util.Ex.transformExceptions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatRuntimeException;
 import static org.assertj.core.api.Fail.fail;
 
 class ExTest {
 
     IOException mockException = new IOException("mock exception");
+
+    IllegalStateException mockUncheckedException = new IllegalStateException("mock unchecked exception");
 
     @Test
     void shouldBeValidUtilityClass() throws NoSuchMethodException {
@@ -54,6 +57,10 @@ class ExTest {
 
         ThrowingSupplier<String, IOException> throwingSupplier = () -> {
             throw mockException;
+        };
+
+        ThrowingSupplier<String, IOException> throwingUncheckedSupplier = () -> {
+            throw mockUncheckedException;
         };
 
         @Test
@@ -82,6 +89,14 @@ class ExTest {
                     .isEqualTo(expected);
         }
 
+        @Test
+        void transformExceptionsShouldBubbleUpAndNotCallTransformerWhenRuntimeExceptionIsThrown() {
+            assertThatRuntimeException()
+                    .isThrownBy(() -> transformExceptions(throwingUncheckedSupplier, r ->
+                            fail("Should not have executed transformer function")))
+                    .isEqualTo(mockUncheckedException);
+        }
+
     }
 
     @Nested
@@ -91,6 +106,10 @@ class ExTest {
 
         ThrowingRunnable<IOException> throwingRunnable = () -> {
             throw mockException;
+        };
+
+        ThrowingRunnable<IOException> throwingUncheckedRunnable = () -> {
+            throw mockUncheckedException;
         };
 
         @Test
@@ -115,6 +134,14 @@ class ExTest {
             assertThatException()
                     .isThrownBy(() -> transformExceptions(throwingRunnable, transformer))
                     .isEqualTo(expected);
+        }
+
+        @Test
+        void transformExceptionsShouldBubbleUpAndNotCallTransformerWhenRuntimeExceptionIsThrown() {
+            assertThatRuntimeException()
+                    .isThrownBy(() -> transformExceptions(throwingUncheckedRunnable, r ->
+                            fail("Should not have executed transformer function")))
+                    .isEqualTo(mockUncheckedException);
         }
 
     }

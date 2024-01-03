@@ -39,8 +39,10 @@ public final class Ex {
     }
 
     /**
-     * Executes a supplier, transforming any thrown exception using a specified function.
-     * e.g., say we have a custom high-level {@code XmlProcessingException} that we want to raise when parsing XML:
+     * Executes a supplier, transforming any thrown {@link Exception} using a specified function.
+     * A thrown {@link RuntimeException} will bubble up unaltered.
+     *
+     * <p>e.g., a custom high-level {@code XmlProcessingException} that we want to raise when parsing XML:</p>
      * <pre>{@code
      * public Document parseXml(String pathname) throws XmlProcessingException {
      *     return Ex.transformExceptions(
@@ -71,8 +73,10 @@ public final class Ex {
     }
 
     /**
-     * Executes a runnable, transforming any thrown exception using a specified function
-     * e.g.,
+     * Executes a runnable, transforming any thrown {@link Exception} using a specified function.
+     * A thrown {@link RuntimeException} will bubble up unaltered.
+     *
+     * <p>e.g.,</p>
      * <pre>{@code
      * public void appendFormattedDateToFile(String date, String fileName) throws LoggingException {
      *     Ex.transformExceptions(
