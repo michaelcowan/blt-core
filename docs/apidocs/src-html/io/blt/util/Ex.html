@@ -53,42 +53,70 @@
 <span class="source-line-no">040</span><span id="line-40"></span>
 <span class="source-line-no">041</span><span id="line-41">    /**</span>
 <span class="source-line-no">042</span><span id="line-42">     * Executes a supplier, transforming any thrown exception using a specified function.</span>
-<span class="source-line-no">043</span><span id="line-43">     *</span>
-<span class="source-line-no">044</span><span id="line-44">     * @param &lt;R&gt;         The result type of the supplier</span>
-<span class="source-line-no">045</span><span id="line-45">     * @param &lt;E&gt;         The type of transformed exception</span>
-<span class="source-line-no">046</span><span id="line-46">     * @param supplier    The supplier that may throw an exception</span>
-<span class="source-line-no">047</span><span id="line-47">     * @param transformer Function to transform exceptions thrown by the supplier</span>
-<span class="source-line-no">048</span><span id="line-48">     * @return The result of the supplier if successful</span>
-<span class="source-line-no">049</span><span id="line-49">     * @throws E If the supplier throws an exception, transformed by the provided function</span>
-<span class="source-line-no">050</span><span id="line-50">     */</span>
-<span class="source-line-no">051</span><span id="line-51">    public static &lt;R, E extends Throwable&gt; R transformExceptions(</span>
-<span class="source-line-no">052</span><span id="line-52">            ThrowingSupplier&lt;R, ? extends Exception&gt; supplier, Function&lt;? super Exception, E&gt; transformer) throws E {</span>
-<span class="source-line-no">053</span><span id="line-53">        try {</span>
-<span class="source-line-no">054</span><span id="line-54">            return supplier.get();</span>
-<span class="source-line-no">055</span><span id="line-55">        } catch (RuntimeException e) {</span>
-<span class="source-line-no">056</span><span id="line-56">            throw e;</span>
-<span class="source-line-no">057</span><span id="line-57">        } catch (Exception e) {</span>
-<span class="source-line-no">058</span><span id="line-58">            throw transformer.apply(e);</span>
-<span class="source-line-no">059</span><span id="line-59">        }</span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * Executes a runnable, transforming any thrown exception using a specified function</span>
-<span class="source-line-no">064</span><span id="line-64">     *</span>
-<span class="source-line-no">065</span><span id="line-65">     * @param &lt;E&gt;         The type of transformed exception</span>
-<span class="source-line-no">066</span><span id="line-66">     * @param runnable    The runnable that may throw an exception</span>
-<span class="source-line-no">067</span><span id="line-67">     * @param transformer Function to transform exceptions thrown by the supplier</span>
-<span class="source-line-no">068</span><span id="line-68">     * @throws E If the supplier throws an exception, transformed by the provided function</span>
-<span class="source-line-no">069</span><span id="line-69">     */</span>
-<span class="source-line-no">070</span><span id="line-70">    public static &lt;E extends Throwable&gt; void transformExceptions(</span>
-<span class="source-line-no">071</span><span id="line-71">            ThrowingRunnable&lt;? extends Exception&gt; runnable, Function&lt;? super Exception, E&gt; transformer) throws E {</span>
-<span class="source-line-no">072</span><span id="line-72">        transformExceptions(() -&gt; {</span>
-<span class="source-line-no">073</span><span id="line-73">            runnable.run();</span>
-<span class="source-line-no">074</span><span id="line-74">            return null;</span>
-<span class="source-line-no">075</span><span id="line-75">        }, transformer);</span>
-<span class="source-line-no">076</span><span id="line-76">    }</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">}</span>
+<span class="source-line-no">043</span><span id="line-43">     * e.g. say we have a custom high-level {@code XmlProcessingException} that we want to raise when parsing XML:</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;pre&gt;{@code</span>
+<span class="source-line-no">045</span><span id="line-45">     * public Document parseXml(String pathname) throws XmlProcessingException {</span>
+<span class="source-line-no">046</span><span id="line-46">     *     return Ex.transformExceptions(</span>
+<span class="source-line-no">047</span><span id="line-47">     *             () -&gt; DocumentBuilderFactory</span>
+<span class="source-line-no">048</span><span id="line-48">     *                     .newInstance()</span>
+<span class="source-line-no">049</span><span id="line-49">     *                     .newDocumentBuilder()       // throws ParserConfigurationException</span>
+<span class="source-line-no">050</span><span id="line-50">     *                     .parse(new File(pathname)), // throws SAXException, IOException</span>
+<span class="source-line-no">051</span><span id="line-51">     *             XmlProcessingException::new);</span>
+<span class="source-line-no">052</span><span id="line-52">     * }</span>
+<span class="source-line-no">053</span><span id="line-53">     * }&lt;/pre&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     *</span>
+<span class="source-line-no">055</span><span id="line-55">     * @param &lt;R&gt;         The result type of the supplier</span>
+<span class="source-line-no">056</span><span id="line-56">     * @param &lt;E&gt;         The type of transformed exception</span>
+<span class="source-line-no">057</span><span id="line-57">     * @param supplier    The supplier that may throw an exception</span>
+<span class="source-line-no">058</span><span id="line-58">     * @param transformer Function to transform exceptions thrown by the supplier</span>
+<span class="source-line-no">059</span><span id="line-59">     * @return The result of the supplier if successful</span>
+<span class="source-line-no">060</span><span id="line-60">     * @throws E If the supplier throws an exception, transformed by the provided function</span>
+<span class="source-line-no">061</span><span id="line-61">     */</span>
+<span class="source-line-no">062</span><span id="line-62">    public static &lt;R, E extends Throwable&gt; R transformExceptions(</span>
+<span class="source-line-no">063</span><span id="line-63">            ThrowingSupplier&lt;R, ? extends Exception&gt; supplier, Function&lt;? super Exception, E&gt; transformer) throws E {</span>
+<span class="source-line-no">064</span><span id="line-64">        try {</span>
+<span class="source-line-no">065</span><span id="line-65">            return supplier.get();</span>
+<span class="source-line-no">066</span><span id="line-66">        } catch (RuntimeException e) {</span>
+<span class="source-line-no">067</span><span id="line-67">            throw e;</span>
+<span class="source-line-no">068</span><span id="line-68">        } catch (Exception e) {</span>
+<span class="source-line-no">069</span><span id="line-69">            throw transformer.apply(e);</span>
+<span class="source-line-no">070</span><span id="line-70">        }</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    /**</span>
+<span class="source-line-no">074</span><span id="line-74">     * Executes a runnable, transforming any thrown exception using a specified function</span>
+<span class="source-line-no">075</span><span id="line-75">     * e.g.</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;pre&gt;{@code</span>
+<span class="source-line-no">077</span><span id="line-77">     * public void appendFormattedDateToFile(String date, String fileName) throws LoggingException {</span>
+<span class="source-line-no">078</span><span id="line-78">     *     Ex.transformExceptions(</span>
+<span class="source-line-no">079</span><span id="line-79">     *             () -&gt; {</span>
+<span class="source-line-no">080</span><span id="line-80">     *                 var formatted = new SimpleDateFormat()</span>
+<span class="source-line-no">081</span><span id="line-81">     *                         .parse(date)            // ParseException</span>
+<span class="source-line-no">082</span><span id="line-82">     *                         .toString();</span>
+<span class="source-line-no">083</span><span id="line-83">     *</span>
+<span class="source-line-no">084</span><span id="line-84">     *                 Files.write(                    // IOException</span>
+<span class="source-line-no">085</span><span id="line-85">     *                         Paths.get(fileName),</span>
+<span class="source-line-no">086</span><span id="line-86">     *                         formatted.getBytes(),</span>
+<span class="source-line-no">087</span><span id="line-87">     *                         StandardOpenOption.APPEND);</span>
+<span class="source-line-no">088</span><span id="line-88">     *             }, LoggingException::new</span>
+<span class="source-line-no">089</span><span id="line-89">     *     );</span>
+<span class="source-line-no">090</span><span id="line-90">     * }</span>
+<span class="source-line-no">091</span><span id="line-91">     * }&lt;/pre&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     *</span>
+<span class="source-line-no">093</span><span id="line-93">     * @param &lt;E&gt;         The type of transformed exception</span>
+<span class="source-line-no">094</span><span id="line-94">     * @param runnable    The runnable that may throw an exception</span>
+<span class="source-line-no">095</span><span id="line-95">     * @param transformer Function to transform exceptions thrown by the supplier</span>
+<span class="source-line-no">096</span><span id="line-96">     * @throws E If the supplier throws an exception, transformed by the provided function</span>
+<span class="source-line-no">097</span><span id="line-97">     */</span>
+<span class="source-line-no">098</span><span id="line-98">    public static &lt;E extends Throwable&gt; void transformExceptions(</span>
+<span class="source-line-no">099</span><span id="line-99">            ThrowingRunnable&lt;? extends Exception&gt; runnable, Function&lt;? super Exception, E&gt; transformer) throws E {</span>
+<span class="source-line-no">100</span><span id="line-100">        transformExceptions(() -&gt; {</span>
+<span class="source-line-no">101</span><span id="line-101">            runnable.run();</span>
+<span class="source-line-no">102</span><span id="line-102">            return null;</span>
+<span class="source-line-no">103</span><span id="line-103">        }, transformer);</span>
+<span class="source-line-no">104</span><span id="line-104">    }</span>
+<span class="source-line-no">105</span><span id="line-105"></span>
+<span class="source-line-no">106</span><span id="line-106">}</span>
 
 
 

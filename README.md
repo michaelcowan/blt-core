@@ -149,7 +149,7 @@ e.g. say we have a custom `XmlProcessingException` that we want to raise for any
 
 ```java
 public Document parseXml(String pathname) throws XmlProcessingException {
-    return transformExceptions(
+    return Ex.transformExceptions(
             () -> DocumentBuilderFactory
                     .newInstance()
                     .newDocumentBuilder()       // throws ParserConfigurationException

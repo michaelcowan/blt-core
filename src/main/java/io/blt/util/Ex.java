@@ -40,6 +40,17 @@ public final class Ex {
 
     /**
      * Executes a supplier, transforming any thrown exception using a specified function.
+     * e.g. say we have a custom high-level {@code XmlProcessingException} that we want to raise when parsing XML:
+     * <pre>{@code
+     * public Document parseXml(String pathname) throws XmlProcessingException {
+     *     return Ex.transformExceptions(
+     *             () -> DocumentBuilderFactory
+     *                     .newInstance()
+     *                     .newDocumentBuilder()       // throws ParserConfigurationException
+     *                     .parse(new File(pathname)), // throws SAXException, IOException
+     *             XmlProcessingException::new);
+     * }
+     * }</pre>
      *
      * @param <R>         The result type of the supplier
      * @param <E>         The type of transformed exception
@@ -61,6 +72,23 @@ public final class Ex {
 
     /**
      * Executes a runnable, transforming any thrown exception using a specified function
+     * e.g.
+     * <pre>{@code
+     * public void appendFormattedDateToFile(String date, String fileName) throws LoggingException {
+     *     Ex.transformExceptions(
+     *             () -> {
+     *                 var formatted = new SimpleDateFormat()
+     *                         .parse(date)            // ParseException
+     *                         .toString();
+     *
+     *                 Files.write(                    // IOException
+     *                         Paths.get(fileName),
+     *                         formatted.getBytes(),
+     *                         StandardOpenOption.APPEND);
+     *             }, LoggingException::new
+     *     );
+     * }
+     * }</pre>
      *
      * @param <E>         The type of transformed exception
      * @param runnable    The runnable that may throw an exception
