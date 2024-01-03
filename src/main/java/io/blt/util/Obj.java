@@ -46,7 +46,7 @@ public final class Obj {
 
     /**
      * Passes the {@code instance} to the {@code consumer}, then returns the {@code instance}.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * var user = Obj.poke(new User(), u -> {
      *     u.setName("Greg");
@@ -70,7 +70,7 @@ public final class Obj {
 
     /**
      * Calls the {@code supplier} to retrieve an instance which is mutated by the {@code consumer} then returned.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * var user = Obj.tap(User::new, u -> {
      *     u.setName("Greg");
@@ -96,7 +96,7 @@ public final class Obj {
      * <p>
      * Optionally, the {@code supplier} may throw which will bubble up.
      * </p>
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * private URL homepageOrDefault(URL homepage) throws MalformedURLException {
      *     return Obj.orElseGet(homepage, () -> new URL("https://google.com"));
@@ -116,7 +116,7 @@ public final class Obj {
 
     /**
      * Invokes and returns the result of {@code supplier} if no exception is thrown, else returns {@code defaultValue}.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * private InputStream openFileOrResource(String name) {
      *     return Obj.orElseOnException(
@@ -142,7 +142,7 @@ public final class Obj {
     /**
      * Throws the specified {@code throwable} if the given {@code value} satisfies the provided {@code predicate}.
      * For convenience, {@code value} is returned.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * public Map<String, String> loadProperties() {
      *     return throwIf(Properties.loadFromJson(FILENAME), Map::isEmpty,
@@ -170,7 +170,7 @@ public final class Obj {
     /**
      * Throws the specified {@code throwable} if the given {@code value} does not satisfy the provided {@code predicate}.
      * For convenience, {@code value} is returned.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * throwUnless(properties, p -> p.containsKey("host"),
      *         () -> new IllegalStateException("Properties must contain a host"));
@@ -193,7 +193,7 @@ public final class Obj {
     /**
      * Returns a new instance of the same type as the input object if possible; otherwise, returns empty.
      * Supports only instances of concrete types that have a public zero argument constructor.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
      *     return Obj.newInstanceOf(map).orElse(new HashMap<>());

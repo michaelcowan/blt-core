@@ -69,7 +69,7 @@ private URL homepageOrDefault(URL homepage) throws MalformedURLException {
 #### `orElseOnException`
 
 Invokes and returns the result of a supplier, unless it throws an exception, in which case a passed value is returned. 
-e.g.
+e.g.,
 
 ```java
 private InputStream openFileOrResource(String name) {
@@ -82,7 +82,7 @@ private InputStream openFileOrResource(String name) {
 #### `throwIf` and `throwUnless`
 
 Throws a provided exception if the given `value` satisfies (or doesn't satisfy) the provided `predicate`.
-e.g.
+e.g.,
 
 ```java
 public Map<String, String> loadProperties() {
@@ -93,7 +93,7 @@ public Map<String, String> loadProperties() {
 
 #### `newInstanceOf`
 
-Creates a new instance of the same type as the input object if possible, otherwise, returns empty. e.g.
+Creates a new instance of the same type as the input object if possible, otherwise, returns empty. e.g.,
 
 ```java
 public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
@@ -103,7 +103,7 @@ public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
 
 ### `Ctr`
 
-> Static utility methods for operating on `Collection` and `Map` i.e. Containers
+> Static utility methods for operating on `Collection` and `Map` i.e., Containers
 > 
 > For methods that accept and return a container, the result will be of the [same type if possible](#newInstanceOf)
 
@@ -111,7 +111,7 @@ public <K, V> Map<K, V> mapOfSameTypeOrHashMap(Map<K, V> map) {
 
 Returns a new `Map` containing the entries of another with a transform applied to the values. 
 If possible, the returned `Map` is of the same type as the passed `Map`.
-e.g.
+e.g.,
 
 ```java
 var birthdays = Ctr.transformValues(
@@ -145,7 +145,7 @@ Executes a function, transforming any thrown exception.
 This can be useful when a method or lambda throws many checked exception types which should be mapped to a higher-level
 exception.
 
-e.g. say we have a custom `XmlProcessingException` that we want to raise for any exception related to parsing XML:
+e.g., say we have a custom `XmlProcessingException` that we want to raise for any exception related to parsing XML:
 
 ```java
 public Document parseXml(String pathname) throws XmlProcessingException {

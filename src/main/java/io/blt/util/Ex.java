@@ -40,7 +40,7 @@ public final class Ex {
 
     /**
      * Executes a supplier, transforming any thrown exception using a specified function.
-     * e.g. say we have a custom high-level {@code XmlProcessingException} that we want to raise when parsing XML:
+     * e.g., say we have a custom high-level {@code XmlProcessingException} that we want to raise when parsing XML:
      * <pre>{@code
      * public Document parseXml(String pathname) throws XmlProcessingException {
      *     return Ex.transformExceptions(
@@ -72,7 +72,7 @@ public final class Ex {
 
     /**
      * Executes a runnable, transforming any thrown exception using a specified function
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * public void appendFormattedDateToFile(String date, String fileName) throws LoggingException {
      *     Ex.transformExceptions(

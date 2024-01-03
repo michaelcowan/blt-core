@@ -33,7 +33,7 @@ import static io.blt.util.Obj.newInstanceOf;
 import static java.util.Objects.nonNull;
 
 /**
- * Static utility methods for operating on implementations of {@code Collection} and {@code Map} i.e. Containers.
+ * Static utility methods for operating on implementations of {@code Collection} and {@code Map} i.e., Containers.
  * <p>
  * For methods that return a modification of a passed container, the result will be of the same type if possible.
  * This is accomplished using {@link Obj#newInstanceOf(Object)} and its limitations apply.
@@ -50,7 +50,7 @@ public final class Ctr {
      * <p>
      * If possible, the result is of the same type as the passed {@code source} map.
      * </p>
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * var scores = Map.of("Louis", 95, "Greg", 92, "Mike", 71, "Phil", 86);
      * var grades = Ctr.transformValues(scores, score -> {
@@ -93,7 +93,7 @@ public final class Ctr {
     /**
      * For the specified {@code map}, if there is no value for the specified {@code key} then {@code compute} will be
      * called and the result entered into the map. If a value is present, then it is returned.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * private final Map<URL, String> cache = new HashMap<>();
      *
@@ -146,7 +146,7 @@ public final class Ctr {
     /**
      * For the specified {@code map}, if there is no value for the specified {@code key} then {@code compute} will be
      * called and the result entered into the map. If a value is present, then it is returned.
-     * e.g.
+     * e.g.,
      * <pre>{@code
      * private final Map<URL, String> cache = new HashMap<>();
      *

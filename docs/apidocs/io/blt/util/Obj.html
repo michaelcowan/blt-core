@@ -169,7 +169,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
  <a href="functional/ThrowingConsumer.html" title="interface in io.blt.util.functional">ThrowingConsumer</a>&lt;T,<wbr>E&gt;&nbsp;consumer)</span>
                                       throws <span class="exceptions">E</span></div>
 <div class="block">Passes the <code>instance</code> to the <code>consumer</code>, then returns the <code>instance</code>.
- e.g.
+ e.g.,
  <pre><code>
  var user = Obj.poke(new User(), u -&gt; {
      u.setName("Greg");
@@ -201,7 +201,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
  <a href="functional/ThrowingConsumer.html" title="interface in io.blt.util.functional">ThrowingConsumer</a>&lt;T,<wbr>E&gt;&nbsp;consumer)</span>
                                      throws <span class="exceptions">E</span></div>
 <div class="block">Calls the <code>supplier</code> to retrieve an instance which is mutated by the <code>consumer</code> then returned.
- e.g.
+ e.g.,
  <pre><code>
  var user = Obj.tap(User::new, u -&gt; {
      u.setName("Greg");
@@ -236,7 +236,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
  <p>
  Optionally, the <code>supplier</code> may throw which will bubble up.
  </p>
- e.g.
+ e.g.,
  <pre><code>
  private URL homepageOrDefault(URL homepage) throws MalformedURLException {
      return Obj.orElseGet(homepage, () -&gt; new URL("https://google.com"));
@@ -263,7 +263,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
 E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name"><a href="../../../src-html/io/blt/util/Obj.html#line-134">orElseOnException</a></span><wbr><span class="parameters">(<a href="functional/ThrowingSupplier.html" title="interface in io.blt.util.functional">ThrowingSupplier</a>&lt;T,<wbr>E&gt;&nbsp;supplier,
  T&nbsp;defaultValue)</span></div>
 <div class="block">Invokes and returns the result of <code>supplier</code> if no exception is thrown, else returns <code>defaultValue</code>.
- e.g.
+ e.g.,
  <pre><code>
  private InputStream openFileOrResource(String name) {
      return Obj.orElseOnException(
@@ -293,7 +293,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
                                          throws <span class="exceptions">E</span></div>
 <div class="block">Throws the specified <code>throwable</code> if the given <code>value</code> satisfies the provided <code>predicate</code>.
  For convenience, <code>value</code> is returned.
- e.g.
+ e.g.,
  <pre><code>
  public Map&lt;String, String&gt; loadProperties() {
      return throwIf(Properties.loadFromJson(FILENAME), Map::isEmpty,
@@ -331,7 +331,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
                                              throws <span class="exceptions">E</span></div>
 <div class="block">Throws the specified <code>throwable</code> if the given <code>value</code> does not satisfy the provided <code>predicate</code>.
  For convenience, <code>value</code> is returned.
- e.g.
+ e.g.,
  <pre><code>
  throwUnless(properties, p -&gt; p.containsKey("host"),
          () -&gt; new IllegalStateException("Properties must contain a host"));
@@ -363,7 +363,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;T&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/io/blt/util/Obj.html#line-207">newInstanceOf</a></span><wbr><span class="parameters">(T&nbsp;obj)</span></div>
 <div class="block">Returns a new instance of the same type as the input object if possible; otherwise, returns empty.
  Supports only instances of concrete types that have a public zero argument constructor.
- e.g.
+ e.g.,
  <pre><code>
  public &lt;K, V&gt; Map&lt;K, V&gt; mapOfSameTypeOrHashMap(Map&lt;K, V&gt; map) {
      return Obj.newInstanceOf(map).orElse(new HashMap&lt;&gt;());

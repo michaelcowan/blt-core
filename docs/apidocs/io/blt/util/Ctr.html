@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name"><a href="../../../src-html/io/blt/util/Ctr.html#line-42">Ctr</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Static utility methods for operating on implementations of <code>Collection</code> and <code>Map</code> i.e. Containers.
+<div class="block">Static utility methods for operating on implementations of <code>Collection</code> and <code>Map</code> i.e., Containers.
  <p>
  For methods that return a modification of a passed container, the result will be of the same type if possible.
  This is accomplished using <a href="Obj.html#newInstanceOf(T)"><code>Obj.newInstanceOf(Object)</code></a> and its limitations apply.
@@ -156,7 +156,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
  <p>
  If possible, the result is of the same type as the passed <code>source</code> map.
  </p>
- e.g.
+ e.g.,
  <pre><code>
  var scores = Map.of("Louis", 95, "Greg", 92, "Mike", 71, "Phil", 86);
  var grades = Ctr.transformValues(scores, score -&gt; {
@@ -207,7 +207,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
                                                    throws <span class="exceptions">E</span></div>
 <div class="block">For the specified <code>map</code>, if there is no value for the specified <code>key</code> then <code>compute</code> will be
  called and the result entered into the map. If a value is present, then it is returned.
- e.g.
+ e.g.,
  <pre><code>
  private final Map&lt;URL, String&gt; cache = new HashMap&lt;&gt;();
 
@@ -269,7 +269,7 @@ E extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/
                                                    throws <span class="exceptions">E</span></div>
 <div class="block">For the specified <code>map</code>, if there is no value for the specified <code>key</code> then <code>compute</code> will be
  called and the result entered into the map. If a value is present, then it is returned.
- e.g.
+ e.g.,
  <pre><code>
  private final Map&lt;URL, String&gt; cache = new HashMap&lt;&gt;();
 
