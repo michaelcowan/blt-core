@@ -24,8 +24,6 @@
 
 package io.blt.util.functional;
 
-import io.blt.util.Obj;
-
 /**
  * Represents a supplier of results that may throw.
  * <p>Like {@code Supplier} but able to throw an exception</p>
@@ -46,21 +44,4 @@ public interface ThrowingSupplier<T, E extends Throwable> {
      */
     T get() throws E;
 
-    /**
-     * Returns the result of {@link ThrowingSupplier#get()} if no exception is thrown, else returns {@code value}.
-     *
-     * @param value returned if an exception is thrown when calling {@link ThrowingSupplier#get()}
-     * @return result of {@link ThrowingSupplier#get()} if no exception is thrown, else {@code value}
-     * @deprecated
-     * The use of a default method here is clearly wrong and should never have been released.
-     * <p>Use {@link Obj#orElseOnException(ThrowingSupplier, Object)} instead.</p>
-     */
-    @Deprecated(since = "1.0.6", forRemoval = true)
-    default T orOnException(T value) {
-        try {
-            return get();
-        } catch (Throwable e) {
-            return value;
-        }
-    }
 }
