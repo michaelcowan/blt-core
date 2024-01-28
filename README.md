@@ -1,5 +1,5 @@
 # blt-core
-> A selection of core utilities that pull in minimal dependencies (if any)
+> A selection of core utilities with zero dependencies
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/michaelcowan/blt-core/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/michaelcowan/blt-core/tree/master)
 
