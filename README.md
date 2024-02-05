@@ -1,7 +1,9 @@
 # blt-core
 > A selection of core utilities with zero dependencies
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/michaelcowan/blt-core/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/michaelcowan/blt-core/tree/master)
+[![Maven Central](https://img.shields.io/maven-central/v/io.blt/blt-core.svg)](https://central.sonatype.com/artifact/io.blt/blt-core)
+[![CircleCI](https://img.shields.io/circleci/build/github/michaelcowan/blt-core/master.svg)](https://dl.circleci.com/status-badge/redirect/gh/michaelcowan/blt-core/tree/master)
+[![Codecov](https://img.shields.io/codecov/c/github/michaelcowan/blt-core)](https://codecov.io/github/michaelcowan/blt-core)
 
 # Installation
 
