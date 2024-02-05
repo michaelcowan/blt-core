@@ -4,8 +4,43 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@1.4.1
+  codecov: codecov/codecov@4.0.1
+
+executors:
+  java11:
+    docker:
+      - image: cimg/openjdk:11.0
+  java17:
+    docker:
+      - image: cimg/openjdk:11.0
+  java21:
+    docker:
+      - image: cimg/openjdk:11.0
+
+jobs:
+  coverage:
+    executor: java11
+    steps:
+      - checkout
+      - maven/with_cache:
+          steps:
+            - run:
+                name: Run tests to record coverage
+                command: mvn verify
+            - codecov/upload:
+                file: ./target/site/jacoco/jacoco.xml
 
 workflows:
   maven_test:
     jobs:
-      - maven/test
+      - maven/test:
+          matrix:
+            alias: test
+            parameters:
+              executor:
+                - java11
+                - java17
+                - java21
+      - coverage:
+          requires:
+            - test
