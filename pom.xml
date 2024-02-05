@@ -67,7 +67,7 @@
 
         <release-plugin.version>3.0.1</release-plugin.version>
         <source-plugin.version>3.3.0</source-plugin.version>
-        <jacoco-plugin.version>0.8.3</jacoco-plugin.version>
+        <jacoco-plugin.version>0.8.11</jacoco-plugin.version>
         <javadoc-plugin.version>3.6.3</javadoc-plugin.version>
         <gpg-plugin.version>3.1.0</gpg-plugin.version>
         <nexus-staging-plugin.version>1.6.13</nexus-staging-plugin.version>
