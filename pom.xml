@@ -66,7 +66,7 @@
         <junit.version>5.10.2</junit.version>
 
         <release-plugin.version>3.0.1</release-plugin.version>
-        <source-plugin.version>3.3.0</source-plugin.version>
+        <source-plugin.version>3.3.1</source-plugin.version>
         <jacoco-plugin.version>0.8.12</jacoco-plugin.version>
         <javadoc-plugin.version>3.6.3</javadoc-plugin.version>
         <gpg-plugin.version>3.2.2</gpg-plugin.version>
