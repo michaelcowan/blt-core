@@ -26,6 +26,7 @@ package io.blt.util;
 
 import io.blt.util.functional.ThrowingFunction;
 import io.blt.util.functional.ThrowingSupplier;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -186,6 +187,37 @@ public final class Ctr {
     public static <K, V, E extends Throwable> V computeIfAbsent(
             Map<K, V> map, K key, ThrowingSupplier<? extends V, E> compute) throws E {
         return computeIfAbsent(map, key, unused -> compute.get());
+    }
+
+    /**
+     * Essentially the same as CollectionUtils.size(collection) == size
+     * Not immediately obvious that null will return 0
+     * Doesn't support Iterator by design (avoids burning the iterator)
+     * @param collection
+     * @param size
+     * @return
+     * @param <C>
+     */
+    public static <C extends Collection<?>> boolean hasSize(C collection, int size) {
+        return nonNull(collection) && collection.size() == size;
+    }
+
+    public static <I extends Iterable<?>> boolean hasSize(I iterable, int size) {
+        int count = 0;
+        if (nonNull(iterable)) {
+            for (var unused : iterable) {
+                count++;
+            }
+        }
+        return nonNull(iterable) && count == size;
+    }
+
+    public static <M extends Map<?, ?>> boolean hasSize(M map, int size) {
+        return nonNull(map) && map.size() == size;
+    }
+
+    public static boolean hasSize(Object[] array, int size) {
+        return nonNull(array) && array.length == size;
     }
 
     private static final class DefaultMap<K, V> extends HashMap<K, V> {}
