@@ -42,6 +42,7 @@ import static io.blt.test.AssertUtils.assertValidUtilityClass;
 import static io.blt.util.Obj.newInstanceOf;
 import static io.blt.util.Obj.orElseGet;
 import static io.blt.util.Obj.orElseOnException;
+import static io.blt.util.Obj.orEmptyOnException;
 import static io.blt.util.Obj.poke;
 import static io.blt.util.Obj.tap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,7 +63,8 @@ class ObjTest {
         void pokeShouldReturnInstance() {
             var instance = new Object();
 
-            var result = poke(instance, c -> {});
+            var result = poke(instance, c -> {
+            });
 
             assertThat(result).isEqualTo(instance);
         }
@@ -95,7 +97,9 @@ class ObjTest {
             var exception = new IOException("mock checked exception");
 
             assertThatException()
-                    .isThrownBy(() -> poke(new User(), u -> {throw exception;}))
+                    .isThrownBy(() -> poke(new User(), u -> {
+                        throw exception;
+                    }))
                     .isEqualTo(exception);
         }
 
@@ -108,9 +112,11 @@ class ObjTest {
         void tapShouldReturnSuppliedInstance() {
             var instance = new Object();
 
-            var result = tap(() -> instance, s -> {});
+            var result = tap(() -> instance, s -> {
+            });
 
-            result = tap(() -> instance, s -> {});
+            result = tap(() -> instance, s -> {
+            });
 
             assertThat(result).isEqualTo(instance);
         }
@@ -143,7 +149,9 @@ class ObjTest {
             var exception = new IOException("mock checked exception");
 
             assertThatException()
-                    .isThrownBy(() -> tap(User::new, u -> {throw exception;}))
+                    .isThrownBy(() -> tap(User::new, u -> {
+                        throw exception;
+                    }))
                     .isEqualTo(exception);
         }
 
@@ -172,7 +180,9 @@ class ObjTest {
         var exception = new Exception("mock exception");
 
         assertThatException()
-                .isThrownBy(() -> orElseGet(null, () -> {throw exception;}))
+                .isThrownBy(() -> orElseGet(null, () -> {
+                    throw exception;
+                }))
                 .isEqualTo(exception);
     }
 
@@ -189,9 +199,29 @@ class ObjTest {
     void orElseOnExceptionShouldReturnValueIfExceptionIsThrown() {
         var value = "Sven";
 
-        var result = orElseOnException(() -> {throw new Exception("mock exception");}, value);
+        var result = orElseOnException(() -> {
+            throw new Exception("mock exception");
+        }, value);
 
         assertThat(result).isEqualTo(value);
+    }
+
+    @Test
+    void orEmptyOnExceptionShouldReturnSupplierResultIfNoExceptionIsThrown() {
+        var supplierResult = "Greg";
+
+        var result = orEmptyOnException(() -> supplierResult);
+
+        assertThat(result).contains(supplierResult);
+    }
+
+    @Test
+    void orEmptyOnExceptionShouldReturnEmptyIfExceptionIsThrown() {
+        var result = orEmptyOnException(() -> {
+            throw new Exception("mock exception");
+        });
+
+        assertThat(result).isEmpty();
     }
 
     static Stream<Arguments> newInstanceOfShouldReturnNewInstanceOf() {
