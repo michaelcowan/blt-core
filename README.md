@@ -184,6 +184,29 @@ public Map<String, String> loadProperties() {
 }
 ```
 
+### `En`
+
+> Static utility methods for operating on `Enum`
+
+#### `of` and `ofIgnoreCase`
+
+Returns the `enum` constant matching `name` as an `Optional`; otherwise, returns empty.
+e.g.,
+
+```java
+of(DayOfWeek.class, "FRIDAY");    // Optional.of(DayOfWeek.FRIDAY)
+of(DayOfWeek.class, "friday");    // Optional.empty()
+of(DayOfWeek.class, "Worf");      // Optional.empty()
+of(DayOfWeek.class, "");          // Optional.empty()
+```
+
+Or, ignoring case:
+
+```java
+ofIgnoreCase(DayOfWeek.class, "FRIDAY");    // Optional.of(DayOfWeek.FRIDAY)
+ofIgnoreCase(DayOfWeek.class, "friday");    // Optional.of(DayOfWeek.FRIDAY)
+```
+
 ### `SingletonCollectors`
 
 Implementations of `Collector` that reduce to exactly one or zero elements.

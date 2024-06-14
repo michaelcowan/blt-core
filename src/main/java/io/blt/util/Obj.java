@@ -61,7 +61,7 @@ public final class Obj {
      * @param consumer operation to perform on {@code instance}
      * @param <T>      type of {@code instance}
      * @param <E>      type of {@code consumer} throwable
-     * @return {@code instance} after accepting side effects via {@code consumer}.
+     * @return {@code instance} after accepting side effects via {@code consumer}
      */
     public static <T, E extends Throwable> T poke(T instance, ThrowingConsumer<T, E> consumer) throws E {
         consumer.accept(instance);
@@ -85,7 +85,7 @@ public final class Obj {
      * @param consumer operation to perform on supplied instance
      * @param <T>      type of instance
      * @param <E>      type of {@code consumer} throwable
-     * @return Supplied instance after applying side effects via {@code consumer}.
+     * @return Supplied instance after applying side effects via {@code consumer}
      */
     public static <T, E extends Throwable> T tap(Supplier<T> supplier, ThrowingConsumer<T, E> consumer) throws E {
         return poke(supplier.get(), consumer);
@@ -134,7 +134,7 @@ public final class Obj {
     public static <T, E extends Throwable> T orElseOnException(ThrowingSupplier<T, E> supplier, T defaultValue) {
         try {
             return supplier.get();
-        } catch (Throwable e) {
+        } catch (Throwable ignore) {
             return defaultValue;
         }
     }
@@ -203,7 +203,7 @@ public final class Obj {
         } catch (InstantiationException
                  | IllegalAccessException
                  | InvocationTargetException
-                 | NoSuchMethodException e) {
+                 | NoSuchMethodException ignore) {
             return Optional.empty();
         }
     }
