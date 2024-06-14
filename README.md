@@ -8,18 +8,24 @@
 
 # Installation
 
-## Maven
+## Maven Central
 
 The library is available via [Maven Central](https://central.sonatype.com/artifact/io.blt/blt-core)
 
 e.g., to add the core library to your dependencies:
 
+### Maven
 ```xml
 <dependency>
     <groupId>io.blt</groupId>
     <artifactId>blt-core</artifactId>
     <version>1.0.7</version>
 </dependency>
+```
+
+### Gradle
+```groovy
+implementation 'io.blt:blt-core:1.0.7'
 ```
 
 # Documentation
