@@ -162,6 +162,27 @@ public final class Obj {
     }
 
     /**
+     * Invokes and returns the result of {@code supplier} if no exception is thrown; otherwise, returns empty.
+     * e.g.,
+     * <pre>{@code
+     * private Optional<HttpResponse<InputStream>> fetchAsStream(HttpRequest request) {
+     *     try (var client = HttpClient.newHttpClient()) {
+     *         return Obj.orEmptyOnException(() -> client.send(
+     *                 request, HttpResponse.BodyHandlers.ofInputStream()));
+     *     }
+     * }
+     * }</pre>
+     *
+     * @param supplier called and returned as an {@link Optional} if no exception is thrown
+     * @param <T>      type of the returned value
+     * @param <E>      type of {@code supplier} throwable
+     * @return result of {@code supplier} as an {@link Optional} if no exception is thrown, else empty
+     */
+    public static <T, E extends Throwable> Optional<T> orEmptyOnException(ThrowingSupplier<T, E> supplier) {
+        return Optional.ofNullable(orElseOnException(supplier, null));
+    }
+
+    /**
      * Returns a new instance of the same type as the input object if possible; otherwise, returns empty.
      * Supports only instances of concrete types that have a public zero argument constructor.
      * e.g.,

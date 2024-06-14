@@ -82,6 +82,22 @@ private InputStream openFileOrResource(String name) {
 }
 ```
 
+#### `orEmptyOnException`
+
+Invokes and returns the result of a supplier wrapped in an `Optional`, unless the supplier throws, in which case empty 
+is returned.
+
+e.g.,
+
+```java
+private Optional<HttpResponse<InputStream>> fetchAsStream(HttpRequest request) {
+    try (var client = HttpClient.newHttpClient()) {
+        return Obj.orEmptyOnException(() -> client.send(
+                request, HttpResponse.BodyHandlers.ofInputStream()));
+    }
+}
+```
+
 #### `newInstanceOf`
 
 Creates a new instance of the same type as the input object if possible, otherwise, returns empty. e.g.,
