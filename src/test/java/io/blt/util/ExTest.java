@@ -32,6 +32,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
+import static io.blt.util.Ex.throwIf;
+import static io.blt.util.Ex.throwUnless;
 import static io.blt.util.Ex.transformExceptions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
@@ -144,6 +146,44 @@ class ExTest {
                     .isEqualTo(mockUncheckedException);
         }
 
+    }
+
+    @Test
+    void throwIfShouldThrowWhenPredicateIsTrue() {
+        var exception = new Exception("mock exception");
+
+        assertThatException()
+                .isThrownBy(() -> throwIf(null, v -> true, () -> exception))
+                .isEqualTo(exception);
+    }
+
+    @Test
+    void throwIfShouldReturnValueWhenPredicateIsFalse() throws Exception {
+        var value = "mock value";
+
+        var result = throwIf(value, v -> false, () -> new Exception("mock exception"));
+
+        assertThat(result)
+                .isEqualTo(value);
+    }
+
+    @Test
+    void throwUnlessShouldThrowWhenPredicateIsFalse() {
+        var exception = new Exception("mock exception");
+
+        assertThatException()
+                .isThrownBy(() -> throwUnless(null, v -> false, () -> exception))
+                .isEqualTo(exception);
+    }
+
+    @Test
+    void throwUnlessShouldReturnValueWhenPredicateIsTrue() throws Exception {
+        var value = "mock value";
+
+        var result = throwUnless(value, v -> true, () -> new Exception("mock exception"));
+
+        assertThat(result)
+                .isEqualTo(value);
     }
 
 }

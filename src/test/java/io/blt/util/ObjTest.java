@@ -44,8 +44,6 @@ import static io.blt.util.Obj.orElseGet;
 import static io.blt.util.Obj.orElseOnException;
 import static io.blt.util.Obj.poke;
 import static io.blt.util.Obj.tap;
-import static io.blt.util.Obj.throwIf;
-import static io.blt.util.Obj.throwUnless;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
@@ -194,44 +192,6 @@ class ObjTest {
         var result = orElseOnException(() -> {throw new Exception("mock exception");}, value);
 
         assertThat(result).isEqualTo(value);
-    }
-
-    @Test
-    void throwIfShouldThrowWhenPredicateIsTrue() {
-        var exception = new Exception("mock exception");
-
-        assertThatException()
-                .isThrownBy(() -> throwIf(null, v -> true, () -> exception))
-                .isEqualTo(exception);
-    }
-
-    @Test
-    void throwIfShouldReturnValueWhenPredicateIsFalse() throws Exception {
-        var value = "mock value";
-
-        var result = throwIf(value, v -> false, () -> new Exception("mock exception"));
-
-        assertThat(result)
-                .isEqualTo(value);
-    }
-
-    @Test
-    void throwUnlessShouldThrowWhenPredicateIsFalse() {
-        var exception = new Exception("mock exception");
-
-        assertThatException()
-                .isThrownBy(() -> throwUnless(null, v -> false, () -> exception))
-                .isEqualTo(exception);
-    }
-
-    @Test
-    void throwUnlessShouldReturnValueWhenPredicateIsTrue() throws Exception {
-        var value = "mock value";
-
-        var result = throwUnless(value, v -> true, () -> new Exception("mock exception"));
-
-        assertThat(result)
-                .isEqualTo(value);
     }
 
     static Stream<Arguments> newInstanceOfShouldReturnNewInstanceOf() {
