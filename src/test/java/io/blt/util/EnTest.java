@@ -42,7 +42,7 @@ class EnTest <E extends Enum<E>> {
 
     @Test
     void shouldBeValidUtilityClass() throws NoSuchMethodException {
-        assertValidUtilityClass(Obj.class);
+        assertValidUtilityClass(En.class);
     }
 
     @ParameterizedTest
