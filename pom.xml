@@ -38,7 +38,7 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
 
@@ -63,7 +63,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <assertj.version>3.26.0</assertj.version>
+        <blt-assertj.version>1.0.1</blt-assertj.version>
         <junit.version>5.10.2</junit.version>
+        <mockito.version>5.12.0</mockito.version>
 
         <release-plugin.version>3.0.1</release-plugin.version>
         <source-plugin.version>3.3.1</source-plugin.version>
@@ -75,6 +77,17 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.blt</groupId>
+            <artifactId>blt-assertj</artifactId>
+            <version>${blt-assertj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -88,9 +101,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
