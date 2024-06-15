@@ -31,14 +31,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
 import static io.blt.test.AssertUtils.assertValidUtilityClass;
+import static io.blt.test.assertj.AnnotationAssertions.assertHasAnnotation;
 import static io.blt.util.Obj.newInstanceOf;
 import static io.blt.util.Obj.orElseGet;
 import static io.blt.util.Obj.orElseOnException;
@@ -262,6 +266,52 @@ class ObjTest {
     void newInstanceOfShouldThrowWhenArgumentIsNull() {
         assertThatNullPointerException()
                 .isThrownBy(() -> newInstanceOf(null));
+    }
+
+    static Stream<Arguments> deprecatedMethodsShouldBeAnnotatedAsDeprecated() {
+        return Stream.of(
+                Arguments.of("throwIf", new Class<?>[] {Object.class, Predicate.class, Supplier.class}),
+                Arguments.of("throwUnless", new Class<?>[] {Object.class, Predicate.class, Supplier.class})
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void deprecatedMethodsShouldBeAnnotatedAsDeprecated(String name, Class<?>... parameters) throws Exception {
+        var method = Obj.class.getMethod(name, parameters);
+
+        assertHasAnnotation(method, Deprecated.class)
+                .satisfies(d ->
+                        assertThat(d)
+                                .extracting(Deprecated::since)
+                                .asString()
+                                .matches("\\d+.\\d+.\\d+"))
+                .extracting(Deprecated::forRemoval)
+                .isEqualTo(true);
+    }
+
+    @Test
+    void throwIfIsMovedAndShouldCallExThrowIf() throws Throwable {
+        var value = "mock-value";
+        Predicate<String> predicate = s -> false;
+        Supplier<Throwable> throwable = () -> new IOException("mock exception");
+
+        try (var mockedEx = Mockito.mockStatic(Ex.class)) {
+            Obj.throwIf(value, predicate, throwable);
+            mockedEx.verify(() -> Ex.throwIf(value, predicate, throwable));
+        }
+    }
+
+    @Test
+    void throwUnlessIsMovedAndShouldCallExThrowUnless() throws Throwable {
+        var value = "mock-value";
+        Predicate<String> predicate = s -> true;
+        Supplier<Throwable> throwable = () -> new IOException("mock exception");
+
+        try (var mockedEx = Mockito.mockStatic(Ex.class)) {
+            Obj.throwUnless(value, predicate, throwable);
+            mockedEx.verify(() -> Ex.throwUnless(value, predicate, throwable));
+        }
     }
 
     public static class User {
