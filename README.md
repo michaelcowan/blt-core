@@ -194,17 +194,17 @@ Returns the `enum` constant matching `name` as an `Optional`; otherwise, returns
 e.g.,
 
 ```java
-of(DayOfWeek.class, "FRIDAY");    // Optional.of(DayOfWeek.FRIDAY)
-of(DayOfWeek.class, "friday");    // Optional.empty()
-of(DayOfWeek.class, "Worf");      // Optional.empty()
-of(DayOfWeek.class, "");          // Optional.empty()
+En.of(DayOfWeek.class, "FRIDAY");    // Optional.of(DayOfWeek.FRIDAY)
+En.of(DayOfWeek.class, "friday");    // Optional.empty()
+En.of(DayOfWeek.class, "Worf");      // Optional.empty()
+En.of(DayOfWeek.class, "");          // Optional.empty()
 ```
 
 Or, ignoring case:
 
 ```java
-ofIgnoreCase(DayOfWeek.class, "FRIDAY");    // Optional.of(DayOfWeek.FRIDAY)
-ofIgnoreCase(DayOfWeek.class, "friday");    // Optional.of(DayOfWeek.FRIDAY)
+En.ofIgnoreCase(DayOfWeek.class, "FRIDAY");    // Optional.of(DayOfWeek.FRIDAY)
+En.ofIgnoreCase(DayOfWeek.class, "friday");    // Optional.of(DayOfWeek.FRIDAY)
 ```
 
 ### `SingletonCollectors`
