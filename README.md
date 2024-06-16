@@ -19,13 +19,13 @@ e.g., to add the core library to your dependencies:
 <dependency>
     <groupId>io.blt</groupId>
     <artifactId>blt-core</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
 ### Gradle
 ```groovy
-implementation 'io.blt:blt-core:1.1.0'
+implementation 'io.blt:blt-core:1.1.1'
 ```
 
 # Documentation
