@@ -80,6 +80,7 @@
             <groupId>io.blt</groupId>
             <artifactId>blt-assertj</artifactId>
             <version>${blt-assertj.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
