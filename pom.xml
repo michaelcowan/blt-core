@@ -63,7 +63,7 @@
 
         <assertj.version>3.26.3</assertj.version>
         <blt-assertj.version>1.0.2</blt-assertj.version>
-        <junit.version>5.10.3</junit.version>
+        <junit.version>5.11.0</junit.version>
         <mockito.version>5.12.0</mockito.version>
 
         <release-plugin.version>3.0.1</release-plugin.version>
