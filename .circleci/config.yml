@@ -9,7 +9,7 @@ orbs:
 executors:
   java11:
     docker:
-      - image: cimg/openjdk:11.0.24
+      - image: cimg/openjdk:11.0.25
   java17:
     docker:
       - image: cimg/openjdk:17.0.13
