@@ -4,7 +4,7 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@1.4.1
-  codecov: codecov/codecov@4.2.0
+  codecov: codecov/codecov@5.0.2
 
 executors:
   java11:
@@ -28,7 +28,7 @@ jobs:
                 name: Run tests to record coverage
                 command: mvn verify
             - codecov/upload:
-                file: ./target/site/jacoco/jacoco.xml
+                files: ./target/site/jacoco/jacoco.xml
 
 workflows:
   maven_test:
