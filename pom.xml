@@ -70,7 +70,7 @@
         <source-plugin.version>3.3.1</source-plugin.version>
         <jacoco-plugin.version>0.8.12</jacoco-plugin.version>
         <javadoc-plugin.version>3.11.2</javadoc-plugin.version>
-        <gpg-plugin.version>3.2.7</gpg-plugin.version>
+        <gpg-plugin.version>3.2.8</gpg-plugin.version>
         <nexus-staging-plugin.version>1.7.0</nexus-staging-plugin.version>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
     </properties>
