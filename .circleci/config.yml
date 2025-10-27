@@ -16,6 +16,9 @@ executors:
   java21:
     docker:
       - image: cimg/openjdk:21.0.8
+  java25:
+    docker:
+      - image: cimg/openjdk:25.0
 
 jobs:
   coverage:
