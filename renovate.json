@@ -8,6 +8,13 @@
       "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
+    },
+    {
+      "matchManagers": ["circleci"],
+      "matchDatasources": ["docker"],
+      "matchPackagePrefixes": ["cimg/"],
+      "updateTypes": ["minor", "patch"],
+      "groupName": "CircleCI executor updates (same major only)"
     }
   ]
 }
