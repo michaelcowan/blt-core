@@ -9,13 +9,13 @@ orbs:
 executors:
   java11:
     docker:
-      - image: cimg/openjdk:11.0.29
+      - image: cimg/openjdk:25.0
   java17:
     docker:
-      - image: cimg/openjdk:17.0.17
+      - image: cimg/openjdk:25.0
   java21:
     docker:
-      - image: cimg/openjdk:21.0.9
+      - image: cimg/openjdk:25.0
   java25:
     docker:
       - image: cimg/openjdk:25.0
