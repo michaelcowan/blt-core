@@ -62,7 +62,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <assertj.version>3.27.7</assertj.version>
-        <blt-assertj.version>1.0.2</blt-assertj.version>
+        <blt-assertj.version>1.1.0</blt-assertj.version>
         <junit.version>5.14.4</junit.version>
         <mockito.version>5.23.0</mockito.version>
 
