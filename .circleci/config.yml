@@ -15,7 +15,7 @@ executors:
       - image: cimg/openjdk:17.0.19
   java21:
     docker:
-      - image: cimg/openjdk:21.0.11
+      - image: cimg/openjdk:21.0.12
   java25:
     docker:
       - image: cimg/openjdk:25.0
