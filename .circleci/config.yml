@@ -4,7 +4,7 @@ version: 2.1
 
 orbs:
   maven: circleci/maven@2.1.1
-  codecov: codecov/codecov@5.4.3
+  codecov: codecov/codecov@6.1.0
 
 executors:
   java11:
